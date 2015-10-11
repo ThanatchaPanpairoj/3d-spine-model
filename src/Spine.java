@@ -32,7 +32,7 @@ public class Spine
                     if(i < 7849)
                         points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + getNum(line.substring(11, 22)), z + getNum(line.substring(22)), 1);
                     else if(i < 23275)
-                        faces.add(new Triangle(new Color(244, 244, 214), points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
+                        faces.add(new Triangle(points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
                                 points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
                 i++;
@@ -54,27 +54,14 @@ public class Spine
     }
 
     public void draw(Graphics2D g2) {
-        boolean draw = false;
         for(Point p : points) {
             if(p.getZ() > 0) {
-                draw = true;
+                faces.sort(new DistanceComparator());
+                for(Triangle f : faces) {
+                    f.draw(g2);
+                }
                 break;
             }
-        }
-
-        if(draw) {   
-            faces.sort(new DistanceComparator());
-            for(Triangle f : faces) {
-                f.draw(g2);
-            }
-
-            //             for(Point p : points) {
-            //                 g2.drawString((int)p.getX() + "," + (int)p.getY() + "," + (int)p.getZ(), (int)p.get2Dx(), (int)p.get2Dy());
-            //             }
-            //             for(int i = 0; i < 8; i++) {
-            //                 g2.drawString("" + i, (int)points[i].get2Dx(), (int)points[i].get2Dy());
-            //             }
-            //g2.drawString("" + Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2)), (int)(new Point(x, y, z, 1).get2Dx()), (int)(new Point(x, y, z, 1).get2Dy()));
         }
     }
 
@@ -90,12 +77,6 @@ public class Spine
         x = newX;
         y = newY;
         z = newZ;
-    }
-
-    public void setColor(Color c) {
-        for(Triangle f : faces) {
-            f.setColor(c);
-        }
     }
 
     public double getX() {
