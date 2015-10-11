@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=g2
+comment0.target=void\ draw(java.awt.Graphics2D)
+comment1.params=transformationMatrix
+comment1.target=void\ transform(double[])
+comment2.params=c
+comment2.target=void\ setColor(java.awt.Color)
+comment3.params=
+comment3.target=double\ getX()
+comment4.params=
+comment4.target=double\ getY()
+comment5.params=
+comment5.target=double\ getZ()
+numComments=6
