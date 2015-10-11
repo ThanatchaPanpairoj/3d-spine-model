@@ -38,7 +38,7 @@ public class Renderer extends JFrame
 {
     private double mouseX, mouseY, numberOfDirectionsMoving, xRotation;
     private boolean left, right, forward, backward;
-    private static final double diagonalMoveSpeed = 50 / Math.sqrt(2);
+    private static final double diagonalMoveSpeed = 20 / Math.sqrt(2);
 
     public static void main(String[] args) throws Exception {
         Renderer r = new Renderer();
@@ -85,7 +85,7 @@ public class Renderer extends JFrame
                 mouseX = MouseInfo.getPointerInfo().getLocation().getX() - getLocation().getX() - 3;
                 mouseY = MouseInfo.getPointerInfo().getLocation().getY() - getLocation().getY() - 25;
 
-                double speed = 50;
+                double speed = 20;
                 if(numberOfDirectionsMoving > 1 && numberOfDirectionsMoving < 3) {
                     speed = diagonalMoveSpeed;
                 }
@@ -206,9 +206,7 @@ public class Renderer extends JFrame
              * @param  e  key typed on the keyboard
              * @return    void
              */
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-            }
+            public void keyTyped(KeyEvent e) {}
         }
 
         class MousePressListener implements MouseListener
@@ -219,10 +217,7 @@ public class Renderer extends JFrame
              * @param  event  mouse button press
              * @return        void
              */
-            public void mousePressed(MouseEvent event)
-            {
-
-            }
+            public void mousePressed(MouseEvent event){}
 
             /**
              * Updates when the mouse button is released.
@@ -230,9 +225,7 @@ public class Renderer extends JFrame
              * @param  event  mouse button is released
              * @return        void
              */
-            public void mouseReleased(MouseEvent event) {
-                comp.click();
-            }
+            public void mouseReleased(MouseEvent event) {}
 
             public void mouseClicked(MouseEvent event) {}
 
@@ -254,6 +247,7 @@ public class Renderer extends JFrame
         comp.setBounds(0, 0, width, height);
         comp.setFocusable(true);
         comp.setVisible(true);
+        comp.setDoubleBuffered(true);
 
         final int DELAY = 1000 / 60;//60 frames per second
         Timer t = new Timer(DELAY, new TimeListener());

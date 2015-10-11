@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=fileName\ x\ y\ z
-comment0.target=SpinalDisk(java.lang.String,\ double,\ double,\ double)
+comment0.target=Spine(java.lang.String,\ double,\ double,\ double)
 comment1.params=c\ fileName\ radius\ x\ y\ z
-comment1.target=SpinalDisk(java.awt.Color,\ java.lang.String,\ double,\ double,\ double,\ double)
+comment1.target=Spine(java.awt.Color,\ java.lang.String,\ double,\ double,\ double,\ double)
 comment2.params=s
 comment2.target=double\ getNum(java.lang.String)
 comment3.params=g2

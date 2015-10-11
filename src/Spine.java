@@ -9,13 +9,13 @@ import java.io.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class SpinalDisk extends Shape
+public class Spine
 {
     private Point[] points;
     private ArrayList<Triangle> faces;
     private double x, y, z;
 
-    public SpinalDisk(String fileName, double x, double y, double z) {
+    public Spine(String fileName, double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -30,7 +30,7 @@ public class SpinalDisk extends Shape
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + getNum(line.substring(10, 22)), z + getNum(line.substring(22)), 1);
+                        points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + getNum(line.substring(11, 22)), z + getNum(line.substring(22)), 1);
                     else if(i < 23275)
                         faces.add(new Triangle(Color.WHITE, points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
@@ -49,7 +49,7 @@ public class SpinalDisk extends Shape
         }
     }
 
-    public SpinalDisk(Color c, String fileName, double radius, double x, double y, double z) {
+    public Spine(Color c, String fileName, double radius, double x, double y, double z) {
         this(fileName, x, y, z);
         setColor(c);
     }
@@ -68,8 +68,8 @@ public class SpinalDisk extends Shape
         }
 
         if(draw) {   
-            faces.sort(new FaceDistanceComparator());
-            for(int i = 0; i < 15426; i++) {
+            faces.sort(new DistanceComparator());
+            for(int i = 100; i < 15426; i++) {
                 faces.get(i).draw(g2);
             }
 

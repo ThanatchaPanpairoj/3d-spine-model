@@ -15,16 +15,14 @@ import javax.swing.JComponent;
 public class RendererComponent extends JComponent
 {
     private int width, height;
-    private ArrayList<Shape> shapes;
-    private Shape firstCube;
+    private Spine spine;
     private ArrayList<Line> grid;
 
     public RendererComponent(int width, int height) {
         this.width = width;
         this.height = height;
 
-        shapes = new ArrayList<Shape>();
-        shapes.add(firstCube = new SpinalDisk("L4.shl", 0, 0, 100));
+        spine = new Spine("L4.shl", 0, 0, 100);
 
         grid = new ArrayList<Line>();
         for(int w = -100000; w <= 100000; w += 400) {
@@ -36,7 +34,7 @@ public class RendererComponent extends JComponent
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         g2.translate(width / 2, height / 2);
-        
+
         g2.setColor(Color.GRAY);
         for(Line l : grid) {
             l.draw(g2);
@@ -47,45 +45,38 @@ public class RendererComponent extends JComponent
         g2.drawString("Mouse to turn", -width / 2 + 5, - height / 2 + 34);
         g2.drawString("ESC to exit", -width / 2 + 5, - height / 2 + 51);
 
-        shapes.sort(new DistanceComparator());
+        spine.draw(g2);
+        double xShift = spine.getX();
+        double yShift = spine.getY();
+        double zShift = spine.getZ();
 
-        for(Shape s : shapes) {
-            s.draw(g2);
-            double xShift = s.getX();
-            double yShift = s.getY();
-            double zShift = s.getZ();
+        spine.transform(new double[] {1, 0, 0, -xShift, 
+                0, 1, 0, -yShift, 
+                0, 0, 1, -zShift, 
+                0, 0, 0,         1});
 
-            if(s == firstCube) { 
-                s.transform(new double[] {1, 0, 0, -xShift, 
-                        0, 1, 0, -yShift, 
-                        0, 0, 1, -zShift, 
-                        0, 0, 0,         1});
+        double xSpinAngle = 0.016;
+        spine.transform(new double[] {1,                     0,                    0, 0, 
+                0,  Math.cos(xSpinAngle), Math.sin(xSpinAngle), 0, 
+                0, -Math.sin(xSpinAngle), Math.cos(xSpinAngle), 0, 
+                0,                     0,                    0, 1});
 
-                double xSpinAngle = 0.016;
-                s.transform(new double[] {1,                     0,                    0, 0, 
-                        0,  Math.cos(xSpinAngle), Math.sin(xSpinAngle), 0, 
-                        0, -Math.sin(xSpinAngle), Math.cos(xSpinAngle), 0, 
-                        0,                     0,                    0, 1});
+        double ySpinAngle = 0.008;
+        spine.transform(new double[] {Math.cos(ySpinAngle), 0, Math.sin(ySpinAngle), 0,
+                0, 1,                    0, 0, 
+                -Math.sin(ySpinAngle), 0, Math.cos(ySpinAngle), 0, 
+                0, 0,                    0, 1});
 
-                double ySpinAngle = 0.008;
-                s.transform(new double[] {Math.cos(ySpinAngle), 0, Math.sin(ySpinAngle), 0,
-                        0, 1,                    0, 0, 
-                        -Math.sin(ySpinAngle), 0, Math.cos(ySpinAngle), 0, 
-                        0, 0,                    0, 1});
+        double zSpinAngle = 0.02;
+        spine.transform(new double[] {Math.cos(zSpinAngle), Math.sin(zSpinAngle), 0, 0, 
+                -Math.sin(zSpinAngle), Math.cos(zSpinAngle), 0, 0, 
+                0,                    0, 1, 0,
+                0,                    0, 0, 1});
 
-                double zSpinAngle = 0.02;
-                s.transform(new double[] {Math.cos(zSpinAngle), Math.sin(zSpinAngle), 0, 0, 
-                        -Math.sin(zSpinAngle), Math.cos(zSpinAngle), 0, 0, 
-                        0,                    0, 1, 0,
-                        0,                    0, 0, 1});
-
-                s.transform(new double[] {1, 0, 0, xShift,
-                        0, 1, 0, yShift, 
-                        0, 0, 1, zShift, 
-                        0, 0, 0,        1});         
-            } //else 
-            //s.setColor(Color.WHITE);
-        }
+        spine.transform(new double[] {1, 0, 0, xShift,
+                0, 1, 0, yShift, 
+                0, 0, 1, zShift, 
+                0, 0, 0,        1});         
     }
 
     public void transform(double[] transformationMatrix) {
@@ -93,12 +84,6 @@ public class RendererComponent extends JComponent
             l.transform(transformationMatrix);
         }
 
-        for(Shape s : shapes) {
-            s.transform(transformationMatrix);
-        }
-    }
-
-    public void click() {
-        //
+        spine.transform(transformationMatrix);
     }
 }

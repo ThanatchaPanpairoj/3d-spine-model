@@ -5,6 +5,4 @@ comment1.params=g
 comment1.target=void\ paintComponent(java.awt.Graphics)
 comment2.params=transformationMatrix
 comment2.target=void\ transform(double[])
-comment3.params=
-comment3.target=void\ click()
-numComments=4
+numComments=3
