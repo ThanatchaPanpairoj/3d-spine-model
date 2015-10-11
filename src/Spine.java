@@ -15,7 +15,7 @@ public class Spine
     private ArrayList<Triangle> faces;
     private double x, y, z;
 
-    public Spine(String fileName, double x, double y, double z) {
+    public Spine(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -24,7 +24,7 @@ public class Spine
 
         String line = null;
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("L4.shl"));
 
             int i = 0;
             while((line = bufferedReader.readLine()) != null) {
@@ -41,17 +41,12 @@ public class Spine
             bufferedReader.close();         
         }
         catch(FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");                
+            System.out.println("Unable to open file 'L4.shl'");                
         }
         catch(IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");                  
+            System.out.println("Error reading file 'L4.shl'");                  
             ex.printStackTrace();
         }
-    }
-
-    public Spine(Color c, String fileName, double radius, double x, double y, double z) {
-        this(fileName, x, y, z);
-        setColor(c);
     }
 
     private double getNum(String s) {
@@ -70,6 +65,8 @@ public class Spine
         if(draw) {   
             faces.sort(new DistanceComparator());
             for(int i = 100; i < 15426; i++) {
+                int color = 244 ;
+                faces.get(i).setColor(new Color(color, color, color - 30));
                 faces.get(i).draw(g2);
             }
 
@@ -87,10 +84,6 @@ public class Spine
         for(Point p : points) {
             if(p != null)
                 p.transform(transformationMatrix);
-        }
-
-        for(Triangle f : faces) {
-            f.getCenter().transform(transformationMatrix);
         }
 
         double newX = x * transformationMatrix[0] + y * transformationMatrix[1] + z * transformationMatrix[2] + transformationMatrix[3];

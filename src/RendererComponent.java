@@ -22,7 +22,7 @@ public class RendererComponent extends JComponent
         this.width = width;
         this.height = height;
 
-        spine = new Spine("L4.shl", 0, 0, 100);
+        spine = new Spine(0, 0, 100);
 
         grid = new ArrayList<Line>();
         for(int w = -100000; w <= 100000; w += 400) {
@@ -32,6 +32,7 @@ public class RendererComponent extends JComponent
     }
 
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.translate(width / 2, height / 2);
 
