@@ -32,7 +32,7 @@ public class Spine
                     if(i < 7849)
                         points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + getNum(line.substring(11, 22)), z + getNum(line.substring(22)), 1);
                     else if(i < 23275)
-                        faces.add(new Triangle(Color.WHITE, points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
+                        faces.add(new Triangle(new Color(244, 244, 214), points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
                                 points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
                 i++;
@@ -64,10 +64,8 @@ public class Spine
 
         if(draw) {   
             faces.sort(new DistanceComparator());
-            for(int i = 100; i < 15426; i++) {
-                int color = 244 ;
-                faces.get(i).setColor(new Color(color, color, color - 30));
-                faces.get(i).draw(g2);
+            for(Triangle f : faces) {
+                f.draw(g2);
             }
 
             //             for(Point p : points) {

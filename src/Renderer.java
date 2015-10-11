@@ -37,6 +37,8 @@ import java.awt.image.BufferedImage;
 public class Renderer extends JFrame
 {
     private double mouseX, mouseY, numberOfDirectionsMoving, xRotation;
+    private long startTime;
+    private int frame;
     private boolean left, right, forward, backward;
     private static final double diagonalMoveSpeed = 20 / Math.sqrt(2);
 
@@ -46,6 +48,9 @@ public class Renderer extends JFrame
 
     public Renderer() throws Exception {
         super();
+        
+        startTime = System.currentTimeMillis();
+        frame = 0;
 
         setCursor(getToolkit().createCustomCursor(
                 new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),
@@ -143,6 +148,12 @@ public class Renderer extends JFrame
                 robot.mouseMove(width / 2 + 3, height / 2 + 25);
 
                 comp.repaint();
+                frame++;
+                if(System.currentTimeMillis() - startTime >= 1000) {
+                    startTime += 1000;
+                    comp.updateFPS(frame);
+                    frame = 0;
+                }
             }
         }
 

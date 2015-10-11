@@ -14,7 +14,7 @@ import javax.swing.JComponent;
  */
 public class RendererComponent extends JComponent
 {
-    private int width, height;
+    private int width, height, fps;
     private Spine spine;
     private ArrayList<Line> grid;
 
@@ -45,6 +45,7 @@ public class RendererComponent extends JComponent
         g2.drawString("WASD to move", -width / 2 + 5, - height / 2 + 17);
         g2.drawString("Mouse to turn", -width / 2 + 5, - height / 2 + 34);
         g2.drawString("ESC to exit", -width / 2 + 5, - height / 2 + 51);
+        g2.drawString("FPS: " + fps, width / 2 - 50, - height / 2 + 17);
 
         spine.draw(g2);
         double xShift = spine.getX();
@@ -86,5 +87,9 @@ public class RendererComponent extends JComponent
         }
 
         spine.transform(transformationMatrix);
+    }
+    
+    public void updateFPS(int fps) {
+        this.fps = fps;
     }
 }

@@ -7,6 +7,4 @@ comment2.params=c
 comment2.target=void\ setColor(java.awt.Color)
 comment3.params=
 comment3.target=int\ getDistance()
-comment4.params=
-comment4.target=java.awt.Polygon\ getPolygon()
-numComments=5
+numComments=4
