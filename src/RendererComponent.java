@@ -52,33 +52,33 @@ public class RendererComponent extends JComponent
         double yShift = spine.getY();
         double zShift = spine.getZ();
 
-        spine.transform(new double[] {1, 0, 0, -xShift, 
-                0, 1, 0, -yShift, 
-                0, 0, 1, -zShift, 
-                0, 0, 0,         1});
-
-        double xSpinAngle = 0.016;
-        spine.transform(new double[] {1,                     0,                    0, 0, 
-                0,  Math.cos(xSpinAngle), Math.sin(xSpinAngle), 0, 
-                0, -Math.sin(xSpinAngle), Math.cos(xSpinAngle), 0, 
-                0,                     0,                    0, 1});
-
-        double ySpinAngle = 0.008;
-        spine.transform(new double[] {Math.cos(ySpinAngle), 0, Math.sin(ySpinAngle), 0,
-                0, 1,                    0, 0, 
-                -Math.sin(ySpinAngle), 0, Math.cos(ySpinAngle), 0, 
-                0, 0,                    0, 1});
-
-        double zSpinAngle = 0.02;
-        spine.transform(new double[] {Math.cos(zSpinAngle), Math.sin(zSpinAngle), 0, 0, 
-                -Math.sin(zSpinAngle), Math.cos(zSpinAngle), 0, 0, 
-                0,                    0, 1, 0,
-                0,                    0, 0, 1});
-
-        spine.transform(new double[] {1, 0, 0, xShift,
-                0, 1, 0, yShift, 
-                0, 0, 1, zShift, 
-                0, 0, 0,        1});         
+//         spine.transformDisk1(new double[] {1, 0, 0, -xShift, 
+//                 0, 1, 0, -yShift, 
+//                 0, 0, 1, -zShift, 
+//                 0, 0, 0,         1});
+// 
+//         double xSpinAngle = 0.016;
+//         spine.transformDisk1(new double[] {1,                     0,                    0, 0, 
+//                 0,  Math.cos(xSpinAngle), Math.sin(xSpinAngle), 0, 
+//                 0, -Math.sin(xSpinAngle), Math.cos(xSpinAngle), 0, 
+//                 0,                     0,                    0, 1});
+// 
+//         double ySpinAngle = 0.008;
+//         spine.transformDisk1(new double[] {Math.cos(ySpinAngle), 0, Math.sin(ySpinAngle), 0,
+//                 0, 1,                    0, 0, 
+//                 -Math.sin(ySpinAngle), 0, Math.cos(ySpinAngle), 0, 
+//                 0, 0,                    0, 1});
+// 
+//         double zSpinAngle = 0.02;
+//         spine.transformDisk1(new double[] {Math.cos(zSpinAngle), Math.sin(zSpinAngle), 0, 0, 
+//                 -Math.sin(zSpinAngle), Math.cos(zSpinAngle), 0, 0, 
+//                 0,                    0, 1, 0,
+//                 0,                    0, 0, 1});
+// 
+//         spine.transformDisk1(new double[] {1, 0, 0, xShift,
+//                 0, 1, 0, yShift, 
+//                 0, 0, 1, zShift, 
+//                 0, 0, 0,        1});         
     }
 
     public void transform(double[] transformationMatrix) {
