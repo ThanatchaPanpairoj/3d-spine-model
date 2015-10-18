@@ -8,27 +8,24 @@ import java.awt.Toolkit;
  */
 public class Point
 {
-    private double x, y, z, s, depthScale;
+    private double x, y, z, depthScale;
     private static final double WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2;
 
-    public Point(double x, double y, double z, double s) {
+    public Point(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.s = s;
-        depthScale = s * WIDTH / (20 + z);
+        depthScale = WIDTH / (20 + z);
     }
 
     public void transform(double[] transformationMatrix) {
-        double newX = x * transformationMatrix[0] + y * transformationMatrix[1] + z * transformationMatrix[2] + s * transformationMatrix[3];
-        double newY = x * transformationMatrix[4] + y * transformationMatrix[5] + z * transformationMatrix[6] + s * transformationMatrix[7];
-        double newZ = x * transformationMatrix[8] + y * transformationMatrix[9] + z * transformationMatrix[10] + s * transformationMatrix[11];
-        double newS = x * transformationMatrix[12] + y * transformationMatrix[13] + z * transformationMatrix[14] + s * transformationMatrix[15];
+        double newX = x * transformationMatrix[0] + y * transformationMatrix[1] + z * transformationMatrix[2] + transformationMatrix[3];
+        double newY = x * transformationMatrix[4] + y * transformationMatrix[5] + z * transformationMatrix[6] + transformationMatrix[7];
+        double newZ = x * transformationMatrix[8] + y * transformationMatrix[9] + z * transformationMatrix[10] + transformationMatrix[11];
         x = newX;
         y = newY;
         z = newZ;
-        s = newS;
-        depthScale = s * WIDTH / (20 + z);
+        depthScale = WIDTH / (20 + z);
     }
 
     public double get2Dx() {
@@ -40,14 +37,14 @@ public class Point
     }
 
     public double getX() {
-        return s * x;
+        return x;
     }
 
     public double getY() {
-        return s * y;
+        return y;
     }
 
     public double getZ() {
-        return s * z;
+        return z;
     }
 }

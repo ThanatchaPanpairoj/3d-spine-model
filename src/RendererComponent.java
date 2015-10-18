@@ -26,8 +26,8 @@ public class RendererComponent extends JComponent
 
         grid = new ArrayList<Line>();
         for(int w = -100000; w <= 100000; w += 400) {
-            grid.add(new Line(new Point(w, 800, -100000, 1), new Point(w, 800, 100000, 1)));
-            grid.add(new Line(new Point(-100000, 800, w, 1), new Point(100000, 800, w, 1)));
+            grid.add(new Line(new Point(w, 800, -100000), new Point(w, 800, 100000)));
+            grid.add(new Line(new Point(-100000, 800, w), new Point(100000, 800, w)));
         }
     }
 
