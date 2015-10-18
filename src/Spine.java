@@ -15,7 +15,6 @@ public class Spine
     private Point[] disk1Points, disk2Points;
     private ArrayList<Triangle> faces;
     private double x, y, z;
-    private static final int WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2, HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2;
 
     public Spine(double x, double y, double z) {
         this.x = x;
@@ -33,7 +32,7 @@ public class Spine
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        disk1Points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + getNum(line.substring(11, 22)), z + getNum(line.substring(22)), 1);
+                        disk1Points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + getNum(line.substring(11, 22)), z + getNum(line.substring(22)));
                     else if(i < 23275)
                         faces.add(new Triangle(disk1Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disk1Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
@@ -58,7 +57,7 @@ public class Spine
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        disk2Points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + 37.49034 + getNum(line.substring(11, 22)), z - 15.7949 + getNum(line.substring(22)), 1);
+                        disk2Points[i - 2] = new Point(x + getNum(line.substring(0, 10)), y + 37.49034 + getNum(line.substring(11, 22)), z - 15.7949 + getNum(line.substring(22)));
                     else if(i < 23275)
                         faces.add(new Triangle(disk2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
