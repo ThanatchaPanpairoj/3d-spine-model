@@ -48,10 +48,10 @@ public class RendererComponent extends JComponent
         g2.drawString("FPS: " + fps, width / 2 - 50, - height / 2 + 17);
 
         spine.draw(g2);
-        double xShift = spine.getX();
-        double yShift = spine.getY();
-        double zShift = spine.getZ();
-
+//         double xShift = spine.getX();
+//         double yShift = spine.getY();
+//         double zShift = spine.getZ();
+//
 //         spine.transformDisk1(new double[] {1, 0, 0, -xShift, 
 //                 0, 1, 0, -yShift, 
 //                 0, 0, 1, -zShift, 

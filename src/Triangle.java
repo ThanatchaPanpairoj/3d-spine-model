@@ -25,13 +25,13 @@ public class Triangle
 
     public void draw(Graphics2D g2) {
         g2.setColor(COLOR);
-        g2.fillPolygon(new Polygon(new int[] {(int)p1.get2Dx(), (int)p2.get2Dx(), (int)p3.get2Dx()}, 
-                new int[] {(int)p1.get2Dy(), (int)p2.get2Dy(), (int)p3.get2Dy()}, 3));
+        g2.fillPolygon(new Polygon(new int[] {p1.get2Dx(), p2.get2Dx(), p3.get2Dx()}, 
+                new int[] {p1.get2Dy(), p2.get2Dy(), p3.get2Dy()}, 3));
 
         g2.setColor(LINE_COLOR);
-        g2.drawLine((int)p1.get2Dx(), (int)p1.get2Dy(), (int)p2.get2Dx(), (int)p2.get2Dy());
-        g2.drawLine((int)p2.get2Dx(), (int)p2.get2Dy(), (int)p3.get2Dx(), (int)p3.get2Dy());
-        g2.drawLine((int)p3.get2Dx(), (int)p3.get2Dy(), (int)p1.get2Dx(), (int)p1.get2Dy());
+        g2.drawLine(p1.get2Dx(), p1.get2Dy(), p2.get2Dx(), p2.get2Dy());
+        g2.drawLine(p2.get2Dx(), p2.get2Dy(), p3.get2Dx(), p3.get2Dy());
+        g2.drawLine(p3.get2Dx(), p3.get2Dy(), p1.get2Dx(), p1.get2Dy());
 
         distance = (int)Math.sqrt(Math.pow(p1.getX(), 2)
             + Math.pow(p1.getY(), 2) 
