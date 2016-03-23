@@ -22,7 +22,7 @@ public class RendererComponent extends JComponent
         this.width = width;
         this.height = height;
 
-        spine = new Spine(0, 0, 100);
+        spine = new Spine(0, 0, 100, width, height);
 
         grid = new ArrayList<Line>();
         for(int w = -100000; w <= 100000; w += 400) {

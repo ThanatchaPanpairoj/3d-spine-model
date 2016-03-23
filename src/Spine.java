@@ -1,6 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.io.*;
 
@@ -15,11 +15,14 @@ public class Spine
     private Point[] disk1Points, disk2Points;
     private ArrayList<Triangle> faces;
     private double x, y, z;
+    private int width, height;
 
-    public Spine(double x, double y, double z) {
+    public Spine(double x, double y, double z, int width, int height) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.width = width;
+        this.height = height;
         this.disk1Points = new Point[7847];
         this.disk2Points = new Point[7847];
         this.faces = new ArrayList<Triangle>(2 * 15426);
@@ -36,7 +39,7 @@ public class Spine
                     else if(i < 23275)
                         faces.add(new Triangle(disk1Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disk1Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
-                                disk1Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
+                                disk1Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1], width, height));
                 i++;
             }
 
@@ -61,7 +64,7 @@ public class Spine
                     else if(i < 23275)
                         faces.add(new Triangle(disk2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
-                                disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
+                                disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1], width, height));
                 i++;
             }
 
@@ -86,9 +89,11 @@ public class Spine
             for(int i = 0; i < 1000; i++) {
                 faces.get(i).calcDistance();
             }
+            BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             for(int i = 1000; i < 2 * 15426; i++) {
-                faces.get(i).draw(g2);
+                faces.get(i).draw(g2, img);
             }
+            g2.drawImage(img, -width / 2, -height / 2, null);
         }
     }
 
