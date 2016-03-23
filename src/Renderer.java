@@ -260,7 +260,8 @@ public class Renderer extends JFrame
         comp.setVisible(true);
         comp.setDoubleBuffered(true);
 
-        Timer t = new Timer(0, new TimeListener());
+        final int DELAY = 1000 / 60;//60 frames per second
+        Timer t = new Timer(DELAY, new TimeListener());
         t.start();
 
         panel.setLayout(null);
