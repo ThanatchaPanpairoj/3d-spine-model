@@ -9,6 +9,6 @@ comment3.params=transformationMatrix
 comment3.target=void\ transform(double[])
 comment4.params=transformationMatrix
 comment4.target=void\ transformDisk1(double[])
-comment5.params=gravityX\ gravityY\ gravityZ
+comment5.params=lightX\ lightY\ lightZ
 comment5.target=void\ calculateNewlightingScale(double,\ double,\ double)
 numComments=6

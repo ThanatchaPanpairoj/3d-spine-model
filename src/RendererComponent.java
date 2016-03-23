@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 public class RendererComponent extends JComponent
 {
     private int hWidth, hHeight, fps;
-    private Point gravity;
+    private Point light;
     private Spine spine;
     private ArrayList<Line> grid;
 
@@ -25,7 +25,7 @@ public class RendererComponent extends JComponent
 
         spine = new Spine();
 
-        gravity = new Point(0, -1, 0);
+        light = new Point(0, -1, 0);
 
         grid = new ArrayList<Line>();
         for(int w = -5000; w <= 5000; w += 500) {
@@ -38,7 +38,7 @@ public class RendererComponent extends JComponent
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.translate(hWidth, hHeight);
-        spine.calculateNewlightingScale(gravity.getX(), gravity.getY(), gravity.getZ());
+        spine.calculateNewlightingScale(light.getX(), light.getY(), light.getZ());
         transform(new double[] {1, 0, 0,     0, 
                 0, 1, 0,     0, 
                 0, 0, 1, 100, 
@@ -64,7 +64,7 @@ public class RendererComponent extends JComponent
         for(Line l : grid) {
             l.transform(transformationMatrix);
         }
-        gravity.transform(transformationMatrix);
+        light.transform(transformationMatrix);
         spine.transform(transformationMatrix);
     }
 

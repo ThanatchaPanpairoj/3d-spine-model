@@ -77,10 +77,10 @@ public class Spine
     }
 
     public void draw(Graphics2D g2) {
-            faces.sort(new DistanceComparator());
-            for(int i = 0; i < 2 * 15426; i++) {
-                faces.get(i).draw(g2);
-            }
+        faces.sort(new DistanceComparator());
+        for(int i = 0; i < 2 * 15426; i++) {
+            faces.get(i).draw(g2);
+        }
     }
 
     public void transform(double[] transformationMatrix) {
@@ -91,7 +91,7 @@ public class Spine
         for(Point p : disk2Points) {
             p.transform(transformationMatrix);
         }
-        
+
         for(Triangle t : faces) {
             t.transform(transformationMatrix);
         }
@@ -102,10 +102,10 @@ public class Spine
             p.transform(transformationMatrix);
         }
     }
-    
-    public void calculateNewlightingScale(double gravityX, double gravityY, double gravityZ) {
+
+    public void calculateNewlightingScale(double lightX, double lightY, double lightZ) {
         for(Triangle f : faces) {
-            f.calculateNewlightingScale(gravityX, gravityY, gravityZ);
+            f.calculateNewlightingScale(lightX, lightY, lightZ);
         }
     }
 }
