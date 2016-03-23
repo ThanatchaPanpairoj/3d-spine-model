@@ -106,29 +106,29 @@ public class Renderer extends JFrame
                         -Math.sin(xSpinAngle), 0, Math.cos(xSpinAngle), 0, 
                         0, 0,                    0, 1});
 
-                if(left && !right) {
-                    comp.transform(new double[] {1, 0, 0, speed, 
-                            0, 1, 0,     0, 
-                            0, 0, 1,     0, 
-                            0, 0, 0,     1});
-                } else if(right && !left) {
-                    comp.transform(new double[] {1, 0, 0, -speed, 
-                            0, 1, 0,      0, 
-                            0, 0, 1,      0, 
-                            0, 0, 0,      1});
-                }
-
-                if(forward && !backward) {
-                    comp.transform(new double[] {1, 0, 0,      0, 
-                            0, 1, 0,      0, 
-                            0, 0, 1, -speed, 
-                            0, 0, 0,      1});
-                } else if(backward && !forward) {
-                    comp.transform(new double[] {1, 0, 0,     0, 
-                            0, 1, 0,     0, 
-                            0, 0, 1, speed, 
-                            0, 0, 0,     1});
-                } 
+//                 if(left && !right) {
+//                     comp.transform(new double[] {1, 0, 0, speed, 
+//                             0, 1, 0,     0, 
+//                             0, 0, 1,     0, 
+//                             0, 0, 0,     1});
+//                 } else if(right && !left) {
+//                     comp.transform(new double[] {1, 0, 0, -speed, 
+//                             0, 1, 0,      0, 
+//                             0, 0, 1,      0, 
+//                             0, 0, 0,      1});
+//                 }
+// 
+//                 if(forward && !backward) {
+//                     comp.transform(new double[] {1, 0, 0,      0, 
+//                             0, 1, 0,      0, 
+//                             0, 0, 1, -speed, 
+//                             0, 0, 0,      1});
+//                 } else if(backward && !forward) {
+//                     comp.transform(new double[] {1, 0, 0,     0, 
+//                             0, 1, 0,     0, 
+//                             0, 0, 1, speed, 
+//                             0, 0, 0,     1});
+//                 } 
 
                 comp.transform(new double[] {1,                     0,                  0, 0, 
                         0,  Math.cos(yRotation), Math.sin(yRotation), 0, 
