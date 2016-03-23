@@ -37,9 +37,9 @@ public class Triangle
             g2.fillPolygon(new Polygon(new int[] {p1.get2Dx(), p2.get2Dx(), p3.get2Dx()}, 
                     new int[] {p1.get2Dy(), p2.get2Dy(), p3.get2Dy()}, 3));
             //g2.setColor(LINE_COLOR);
-            } else {
-            g2.setColor(Color.BLACK);
-            g2.drawLine(p2.get2Dx(), p2.get2Dy(), p2.get2Dx() + normal.get2Dx(), p2.get2Dy() + normal.get2Dy());
+            //} else {
+            //g2.setColor(Color.BLACK);
+            //g2.drawLine(p2.get2Dx(), p2.get2Dy(), p2.get2Dx() + normal.get2Dx(), p2.get2Dy() + normal.get2Dy());
             //g2.drawLine(p1.get2Dx(), p1.get2Dy(), p2.get2Dx(), p2.get2Dy());
             //g2.drawLine(p2.get2Dx(), p2.get2Dy(), p3.get2Dx(), p3.get2Dy());
             //g2.drawLine(p3.get2Dx(), p3.get2Dy(), p1.get2Dx(), p1.get2Dy());
