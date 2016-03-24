@@ -1,6 +1,8 @@
 import java.awt.Graphics2D;
 import java.awt.Color;
+
 import java.util.ArrayList;
+
 import java.io.*;
 
 /**
@@ -52,12 +54,21 @@ public class Spine
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        disk2Points[i - 2] = new Point(getNum(line.substring(0, 10)), 37.49034f - 23f + getNum(line.substring(11, 22)), 15.7949f + getNum(line.substring(22)));
+                        disk2Points[i - 2] = new Point(getNum(line.substring(0, 10)), -23f + getNum(line.substring(11, 22)), getNum(line.substring(22)));
                     else if(i < 23275)
                         faces.add(new Triangle(disk2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
                                 disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
                 i++;
+            }
+
+            for(Point p : disk2Points) {
+                float cosYR = (float)Math.cos(0.29496);
+                float sinYR = (float)Math.sin(0.29496);
+                p.transform(new float[] {1, 0, 0, 0, 
+                        0,  cosYR, sinYR, 37.49034f, 
+                        0, -sinYR, cosYR, -15.7949f, 
+                        0,  0,  0, 1});
             }
 
             bufferedReader.close();         
@@ -69,6 +80,9 @@ public class Spine
             System.out.println("Error reading file 'L5.shl'");                  
             ex.printStackTrace();
         }
+
+        for(Triangle t : faces) 
+            t.calculateNormal();
     }
 
     private float getNum(String s) {

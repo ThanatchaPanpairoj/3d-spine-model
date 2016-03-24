@@ -5,6 +5,4 @@ comment1.params=g
 comment1.target=void\ paintComponent(java.awt.Graphics)
 comment2.params=transformationMatrix
 comment2.target=void\ transform(float[])
-comment3.params=fps
-comment3.target=void\ updateFPS(int)
-numComments=4
+numComments=3

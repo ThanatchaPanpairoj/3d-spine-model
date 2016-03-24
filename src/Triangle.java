@@ -18,7 +18,10 @@ public class Triangle
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
-        distance = (int)p1.getZ();
+        distance = (int)p1.getZ(); 
+    }
+    
+    public void calculateNormal() {
         float a1 = p2.getX() - p1.getX();
         float a2 = p2.getY() - p1.getY();
         float a3 = p2.getZ() - p1.getZ();
@@ -55,7 +58,7 @@ public class Triangle
     }
 
     public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
-        lightingScale = 120 + (int)((lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant);
+        lightingScale = 110 + (int)((lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant);
     }
 
     public int getDistance() {

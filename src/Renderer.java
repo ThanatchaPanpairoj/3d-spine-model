@@ -33,8 +33,6 @@ import java.awt.Color;
 public class Renderer extends JFrame
 {
     private float mouseX, mouseY, yRotation;
-    private long startTime;
-    private int frame;
 
     public static void main(String[] args) throws Exception {
         Renderer r = new Renderer();
@@ -42,9 +40,6 @@ public class Renderer extends JFrame
 
     public Renderer() throws Exception {
         super();
-
-        startTime = System.currentTimeMillis();
-        frame = 0;
 
         setCursor(getToolkit().createCustomCursor(
                 new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),
@@ -75,50 +70,46 @@ public class Renderer extends JFrame
 
         class TimeListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
-                mouseX = (float)MouseInfo.getPointerInfo().getLocation().getX() - (float)getLocation().getX() - 3f;
-                mouseY = (float)MouseInfo.getPointerInfo().getLocation().getY() - (float)getLocation().getY() - 25f;
+                if(comp.hasFocus()) {
+                    mouseX = (float)MouseInfo.getPointerInfo().getLocation().getX() - (float)getLocation().getX() - 3f;
+                    mouseY = (float)MouseInfo.getPointerInfo().getLocation().getY() - (float)getLocation().getY() - 25f;
 
-                float cosYR = (float)Math.cos(yRotation);
-                float cosNYR = (float)Math.cos(-yRotation);
-                float sinYR = (float)Math.sin(yRotation);
-                float sinNYR = (float)Math.sin(-yRotation);
+                    float cosYR = (float)Math.cos(yRotation);
+                    float cosNYR = (float)Math.cos(-yRotation);
+                    float sinYR = (float)Math.sin(yRotation);
+                    float sinNYR = (float)Math.sin(-yRotation);
 
-                comp.transform(new float[] {1,                     0,                    0, 0, 
-                        0,  cosNYR, sinNYR, 0, 
-                        0, -sinNYR, cosNYR, 0, 
-                        0,                     0,                    0, 1});
-
-                float xSpinAngle = (width * 0.5f - mouseX) * 0.0025f;
-                comp.transform(new float[] {(float)Math.cos(xSpinAngle), 0, (float)Math.sin(xSpinAngle), 0,
-                        0, 1,                    0, 0, 
-                        -(float)Math.sin(xSpinAngle), 0, (float)Math.cos(xSpinAngle), 0, 
-                        0, 0,                    0, 1});
-
-                comp.transform(new float[] {1,                     0,                  0, 0, 
-                        0,  cosYR, sinYR, 0, 
-                        0, -sinYR, cosYR, 0, 
-                        0,                     0,                  0, 1});
-
-                float ySpinAngle = (height * 0.5f - mouseY) * 0.0025f;
-                if(yRotation + ySpinAngle < Math.PI * 0.5 && yRotation + ySpinAngle > -Math.PI * 0.5) {
-                    float cosYSA = (float)Math.cos(ySpinAngle);
-                    float sinYSA = (float)Math.sin(ySpinAngle);
                     comp.transform(new float[] {1,                     0,                    0, 0, 
-                            0,  cosYSA, sinYSA, 0, 
-                            0, -sinYSA, cosYSA, 0, 
+                            0,  cosNYR, sinNYR, 0, 
+                            0, -sinNYR, cosNYR, 0, 
                             0,                     0,                    0, 1});
 
-                    yRotation += ySpinAngle;
-                }
+                    float xSpinAngle = (width * 0.5f - mouseX) * 0.0025f;
+                    comp.transform(new float[] {(float)Math.cos(xSpinAngle), 0, (float)Math.sin(xSpinAngle), 0,
+                            0, 1,                    0, 0, 
+                            -(float)Math.sin(xSpinAngle), 0, (float)Math.cos(xSpinAngle), 0, 
+                            0, 0,                    0, 1});
 
-                robot.mouseMove(width / 2 + 3, height / 2 + 25);
+                    comp.transform(new float[] {1,                     0,                  0, 0, 
+                            0,  cosYR, sinYR, 0, 
+                            0, -sinYR, cosYR, 0, 
+                            0,                     0,                  0, 1});
 
-                comp.repaint();
-                frame++;
-                if(System.currentTimeMillis() - startTime >= 1000) {
-                    startTime += 1000;
-                    comp.updateFPS(frame);
-                    frame = 0;
+                    float ySpinAngle = (height * 0.5f - mouseY) * 0.0025f;
+                    if(yRotation + ySpinAngle < Math.PI * 0.5 && yRotation + ySpinAngle > -Math.PI * 0.5) {
+                        float cosYSA = (float)Math.cos(ySpinAngle);
+                        float sinYSA = (float)Math.sin(ySpinAngle);
+                        comp.transform(new float[] {1,                     0,                    0, 0, 
+                                0,  cosYSA, sinYSA, 0, 
+                                0, -sinYSA, cosYSA, 0, 
+                                0,                     0,                    0, 1});
+
+                        yRotation += ySpinAngle;
+                    }
+
+                    robot.mouseMove(width / 2 + 3, height / 2 + 25);
+
+                    comp.repaint();
                 }
             }
         }
