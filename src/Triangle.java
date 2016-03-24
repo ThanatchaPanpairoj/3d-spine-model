@@ -31,7 +31,8 @@ public class Triangle
 
     public void draw(Graphics2D g2) {
         //if(normal.getZ() < 100) {
-            if(-1 * (normal.getZ() - 120) * lightingScaleConstant >= 0) {
+        //if(-1 * (normal.getZ() - 120) * lightingScaleConstant > 0) {
+        if(((p2.getX() * normal.getX() + p2.getY() * normal.getY() + p2.getZ() * (normal.getZ() - 100)) * lightingScaleConstant) <= 0) {
             g2.setColor(new Color(150 + lightingScale, 150 + lightingScale, 120 + lightingScale));
             g2.fillPolygon(new Polygon(new int[] {p1.get2Dx(), p2.get2Dx(), p3.get2Dx()}, 
                     new int[] {p1.get2Dy(), p2.get2Dy(), p3.get2Dy()}, 3));

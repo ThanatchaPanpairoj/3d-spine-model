@@ -35,7 +35,6 @@ public class Renderer extends JFrame
     private float mouseX, mouseY, yRotation;
     private long startTime;
     private int frame;
-    private boolean left, right, forward, backward;
 
     public static void main(String[] args) throws Exception {
         Renderer r = new Renderer();
@@ -50,11 +49,6 @@ public class Renderer extends JFrame
         setCursor(getToolkit().createCustomCursor(
                 new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),
                 "null"));
-
-        left = false;
-        right = false;
-        forward = false;
-        backward = false;
 
         yRotation = 0;
 
