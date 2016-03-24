@@ -31,7 +31,7 @@ public class RendererComponent extends JComponent
         spine.calculateNewlightingScale(light.getX(), light.getY(), light.getZ());
         transform(new float[] {1, 0, 0,     0, 
                 0, 1, 0,     0, 
-                0, 0, 1, 100, 
+                0, 0, 1, 120, 
                 0, 0, 0,     1});
 
         g2.setColor(Color.WHITE);
@@ -42,12 +42,12 @@ public class RendererComponent extends JComponent
 
         transform(new float[] {1, 0, 0,     0, 
                 0, 1, 0,     0, 
-                0, 0, 1, -100, 
+                0, 0, 1, -120, 
                 0, 0, 0,     1});
     }
 
     public void transform(float[] transformationMatrix) {
-        light.transform(transformationMatrix);
+        //light.transform(transformationMatrix);
         spine.transform(transformationMatrix);
     }
 

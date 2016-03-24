@@ -21,7 +21,7 @@ public class Spine
 
         String line = null;
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("L4.shl"));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("L4.shl")));
 
             int i = 0;
             while((line = bufferedReader.readLine()) != null) {
@@ -46,7 +46,7 @@ public class Spine
         }
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("L5.shl"));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("L5.shl")));
 
             int i = 0;
             while((line = bufferedReader.readLine()) != null) {
