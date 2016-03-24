@@ -16,7 +16,7 @@ public class Point
         this.x = x;
         this.y = y;
         this.z = z;
-        depthScale = WIDTH / (z + 20);
+        depthScale = WIDTH / z;
         twoDX = (int)(depthScale * x);
         twoDY = (int)(depthScale * y);
     }
@@ -28,7 +28,7 @@ public class Point
         x = newX;
         y = newY;
         z = newZ;
-        depthScale = WIDTH / (z + 20);
+        depthScale = WIDTH / z;
         twoDX = (int)(depthScale * x);
         twoDY = (int)(depthScale * y);
     }
