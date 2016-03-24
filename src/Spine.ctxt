@@ -2,13 +2,13 @@
 comment0.params=
 comment0.target=Spine()
 comment1.params=s
-comment1.target=double\ getNum(java.lang.String)
+comment1.target=float\ getNum(java.lang.String)
 comment2.params=g2
 comment2.target=void\ draw(java.awt.Graphics2D)
 comment3.params=transformationMatrix
-comment3.target=void\ transform(double[])
+comment3.target=void\ transform(float[])
 comment4.params=transformationMatrix
-comment4.target=void\ transformDisk1(double[])
+comment4.target=void\ transformDisk1(float[])
 comment5.params=lightX\ lightY\ lightZ
-comment5.target=void\ calculateNewlightingScale(double,\ double,\ double)
+comment5.target=void\ calculateNewlightingScale(float,\ float,\ float)
 numComments=6

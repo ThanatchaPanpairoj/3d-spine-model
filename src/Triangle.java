@@ -10,30 +10,29 @@ import java.awt.Color;
  */
 public class Triangle
 {
-    private int distance;
-    private double lightingScaleConstant, lightingScale;
+    private int distance, lightingScale;
+    private float lightingScaleConstant;
     private Point p1, p2, p3, normal;
-    private static final Color COLOR = new Color(244, 244, 214), LINE_COLOR = new Color(195, 195, 140);
 
     public Triangle(Point p1, Point p2, Point p3) {
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
         distance = (int)p1.getZ();
-        double a1 = p2.getX() - p1.getX();
-        double a2 = p2.getY() - p1.getY();
-        double a3 = p2.getZ() - p1.getZ();
-        double b1 = p3.getX() - p2.getX();
-        double b2 = p3.getY() - p2.getY();
-        double b3 = p3.getZ() - p2.getZ();
+        float a1 = p2.getX() - p1.getX();
+        float a2 = p2.getY() - p1.getY();
+        float a3 = p2.getZ() - p1.getZ();
+        float b1 = p3.getX() - p2.getX();
+        float b2 = p3.getY() - p2.getY();
+        float b3 = p3.getZ() - p2.getZ();
         normal = new Point(a2*b3-a3*b2,a3*b1-a1*b3,a1*b2-a2*b1);
-        lightingScaleConstant = 1 / (Math.sqrt(Math.pow(normal.getX(), 2) + Math.pow(normal.getY(), 2) + Math.pow(normal.getZ(), 2))); 
+        lightingScaleConstant = 94 / (float)(Math.sqrt(Math.pow(normal.getX(), 2) + Math.pow(normal.getY(), 2) + Math.pow(normal.getZ(), 2))); 
     }
 
     public void draw(Graphics2D g2) {
         //if(normal.getZ() < 100) {
-        if(-1 * (normal.getZ() -100) * lightingScaleConstant >= 0) {
-            g2.setColor(new Color(200 + (int)(44 * lightingScale), 200 + (int)(44 * lightingScale), 170 + (int)(44 * lightingScale)));
+            if(-1 * (normal.getZ() - 120) * lightingScaleConstant >= 0) {
+            g2.setColor(new Color(150 + lightingScale, 150 + lightingScale, 120 + lightingScale));
             g2.fillPolygon(new Polygon(new int[] {p1.get2Dx(), p2.get2Dx(), p3.get2Dx()}, 
                     new int[] {p1.get2Dy(), p2.get2Dy(), p3.get2Dy()}, 3));
             //g2.setColor(LINE_COLOR);
@@ -50,12 +49,12 @@ public class Triangle
         distance = (int)p1.getZ();
     }
 
-    public void transform(double[] transformationMatrix) {
+    public void transform(float[] transformationMatrix) {
         normal.transform(transformationMatrix);
     }
 
-    public void calculateNewlightingScale(double lightX, double lightY, double lightZ) {
-        lightingScale = (lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant;
+    public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
+        lightingScale = (int)((lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant);
     }
 
     public int getDistance() {

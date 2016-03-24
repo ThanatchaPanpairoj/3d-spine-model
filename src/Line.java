@@ -30,7 +30,7 @@ public class Line
         }
     }
 
-    public void transform(double[] transformationMatrix) {
+    public void transform(float[] transformationMatrix) {
         p1.transform(transformationMatrix);
         p2.transform(transformationMatrix);
     }

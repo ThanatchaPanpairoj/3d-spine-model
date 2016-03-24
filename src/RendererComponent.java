@@ -1,8 +1,6 @@
-import java.lang.Double;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
@@ -17,21 +15,13 @@ public class RendererComponent extends JComponent
     private int hWidth, hHeight, fps;
     private Point light;
     private Spine spine;
-    private ArrayList<Line> grid;
 
     public RendererComponent(int width, int height) {
         this.hWidth = width >> 1;
         this.hHeight = height >> 1;
-
         spine = new Spine();
 
         light = new Point(0, -1, 0);
-
-        grid = new ArrayList<Line>();
-        for(int w = -5000; w <= 5000; w += 500) {
-            grid.add(new Line(new Point(w, 800, -5000), new Point(w, 800, 5000)));
-            grid.add(new Line(new Point(-5000, 800, w), new Point(5000, 800, w)));
-        }
     }
 
     public void paintComponent(Graphics g) {
@@ -39,31 +29,24 @@ public class RendererComponent extends JComponent
         Graphics2D g2 = (Graphics2D)g;
         g2.translate(hWidth, hHeight);
         spine.calculateNewlightingScale(light.getX(), light.getY(), light.getZ());
-        transform(new double[] {1, 0, 0,     0, 
+        transform(new float[] {1, 0, 0,     0, 
                 0, 1, 0,     0, 
-                0, 0, 1, 100, 
+                0, 0, 1, 120, 
                 0, 0, 0,     1});
-        g2.setColor(Color.GRAY);
-        for(Line l : grid) {
-            l.draw(g2);
-        }
 
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.WHITE);
         g2.drawString("ESC to exit", -hWidth + 5, - hHeight + 17);
         g2.drawString("FPS: " + fps, hWidth - 50, - hHeight + 17);
 
         spine.draw(g2);
 
-        transform(new double[] {1, 0, 0,     0, 
+        transform(new float[] {1, 0, 0,     0, 
                 0, 1, 0,     0, 
-                0, 0, 1, -100, 
+                0, 0, 1, -120, 
                 0, 0, 0,     1});
     }
 
-    public void transform(double[] transformationMatrix) {
-        for(Line l : grid) {
-            l.transform(transformationMatrix);
-        }
+    public void transform(float[] transformationMatrix) {
         light.transform(transformationMatrix);
         spine.transform(transformationMatrix);
     }

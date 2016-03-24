@@ -8,27 +8,27 @@ import java.awt.Toolkit;
  */
 public class Point
 {
-    private double x, y, z, depthScale;
+    private float x, y, z, depthScale;
     private int twoDX, twoDY;
-    private static final double WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2;
+    private static final float WIDTH = (float)Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.5f;
 
-    public Point(double x, double y, double z) {
+    public Point(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
-        depthScale = WIDTH / (20 + z);
+        depthScale = WIDTH / z;
         twoDX = (int)(depthScale * x);
         twoDY = (int)(depthScale * y);
     }
 
-    public void transform(double[] transformationMatrix) {
-        double newX = x * transformationMatrix[0] + y * transformationMatrix[1] + z * transformationMatrix[2] + transformationMatrix[3];
-        double newY = x * transformationMatrix[4] + y * transformationMatrix[5] + z * transformationMatrix[6] + transformationMatrix[7];
-        double newZ = x * transformationMatrix[8] + y * transformationMatrix[9] + z * transformationMatrix[10] + transformationMatrix[11];
+    public void transform(float[] transformationMatrix) {
+        float newX = x * transformationMatrix[0] + y * transformationMatrix[1] + z * transformationMatrix[2] + transformationMatrix[3];
+        float newY = x * transformationMatrix[4] + y * transformationMatrix[5] + z * transformationMatrix[6] + transformationMatrix[7];
+        float newZ = x * transformationMatrix[8] + y * transformationMatrix[9] + z * transformationMatrix[10] + transformationMatrix[11];
         x = newX;
         y = newY;
         z = newZ;
-        depthScale = WIDTH / (20 + z);
+        depthScale = WIDTH / z;
         twoDX = (int)(depthScale * x);
         twoDY = (int)(depthScale * y);
     }
@@ -41,15 +41,15 @@ public class Point
         return twoDY;
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getZ() {
+    public float getZ() {
         return z;
     }
 }

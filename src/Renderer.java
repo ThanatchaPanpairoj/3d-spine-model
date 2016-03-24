@@ -3,8 +3,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.JOptionPane;
 
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
 import java.awt.Toolkit;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -13,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -23,8 +20,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
- 
- 
+import java.awt.Color;
 
 /**
  * This is the GUITemplate class. This includes the JFrame, listeners, buttons, and the GUITemplateComponent which includes all the objects. The buttons and the components are all added to a panel, which is added to the frame.
@@ -36,11 +32,10 @@ import java.awt.image.BufferedImage;
 
 public class Renderer extends JFrame
 {
-    private double mouseX, mouseY, numberOfDirectionsMoving, yRotation;
+    private float mouseX, mouseY, yRotation;
     private long startTime;
     private int frame;
     private boolean left, right, forward, backward;
-    private static final double diagonalMoveSpeed = 20 / Math.sqrt(2);
 
     public static void main(String[] args) throws Exception {
         Renderer r = new Renderer();
@@ -48,7 +43,7 @@ public class Renderer extends JFrame
 
     public Renderer() throws Exception {
         super();
-        
+
         startTime = System.currentTimeMillis();
         frame = 0;
 
@@ -61,7 +56,6 @@ public class Renderer extends JFrame
         forward = false;
         backward = false;
 
-        numberOfDirectionsMoving = 0;
         yRotation = 0;
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -82,64 +76,42 @@ public class Renderer extends JFrame
 
         JPanel panel = new JPanel();
         panel.setDoubleBuffered(true);
-
+        panel.setBackground(Color.BLACK);
         RendererComponent comp = new RendererComponent(width, height);
 
         class TimeListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
-                mouseX = MouseInfo.getPointerInfo().getLocation().getX() - getLocation().getX() - 3;
-                mouseY = MouseInfo.getPointerInfo().getLocation().getY() - getLocation().getY() - 25;
+                mouseX = (float)MouseInfo.getPointerInfo().getLocation().getX() - (float)getLocation().getX() - 3f;
+                mouseY = (float)MouseInfo.getPointerInfo().getLocation().getY() - (float)getLocation().getY() - 25f;
 
-                double speed = 20;
-                if(numberOfDirectionsMoving > 1 && numberOfDirectionsMoving < 3) {
-                    speed = diagonalMoveSpeed;
-                }
+                float cosYR = (float)Math.cos(yRotation);
+                float cosNYR = (float)Math.cos(-yRotation);
+                float sinYR = (float)Math.sin(yRotation);
+                float sinNYR = (float)Math.sin(-yRotation);
 
-                comp.transform(new double[] {1,                     0,                    0, 0, 
-                        0,  Math.cos(-yRotation), Math.sin(-yRotation), 0, 
-                        0, -Math.sin(-yRotation), Math.cos(-yRotation), 0, 
+                comp.transform(new float[] {1,                     0,                    0, 0, 
+                        0,  cosNYR, sinNYR, 0, 
+                        0, -sinNYR, cosNYR, 0, 
                         0,                     0,                    0, 1});
 
-                double xSpinAngle = (width / 2 - mouseX) / 400;
-                comp.transform(new double[] {Math.cos(xSpinAngle), 0, Math.sin(xSpinAngle), 0,
+                float xSpinAngle = (width * 0.5f - mouseX) * 0.0025f;
+                comp.transform(new float[] {(float)Math.cos(xSpinAngle), 0, (float)Math.sin(xSpinAngle), 0,
                         0, 1,                    0, 0, 
-                        -Math.sin(xSpinAngle), 0, Math.cos(xSpinAngle), 0, 
+                        -(float)Math.sin(xSpinAngle), 0, (float)Math.cos(xSpinAngle), 0, 
                         0, 0,                    0, 1});
 
-//                 if(left && !right) {
-//                     comp.transform(new double[] {1, 0, 0, speed, 
-//                             0, 1, 0,     0, 
-//                             0, 0, 1,     0, 
-//                             0, 0, 0,     1});
-//                 } else if(right && !left) {
-//                     comp.transform(new double[] {1, 0, 0, -speed, 
-//                             0, 1, 0,      0, 
-//                             0, 0, 1,      0, 
-//                             0, 0, 0,      1});
-//                 }
-// 
-//                 if(forward && !backward) {
-//                     comp.transform(new double[] {1, 0, 0,      0, 
-//                             0, 1, 0,      0, 
-//                             0, 0, 1, -speed, 
-//                             0, 0, 0,      1});
-//                 } else if(backward && !forward) {
-//                     comp.transform(new double[] {1, 0, 0,     0, 
-//                             0, 1, 0,     0, 
-//                             0, 0, 1, speed, 
-//                             0, 0, 0,     1});
-//                 } 
-
-                comp.transform(new double[] {1,                     0,                  0, 0, 
-                        0,  Math.cos(yRotation), Math.sin(yRotation), 0, 
-                        0, -Math.sin(yRotation), Math.cos(yRotation), 0, 
+                comp.transform(new float[] {1,                     0,                  0, 0, 
+                        0,  cosYR, sinYR, 0, 
+                        0, -sinYR, cosYR, 0, 
                         0,                     0,                  0, 1});
 
-                double ySpinAngle = (height / 2 - mouseY) / 400;
-                if(yRotation + ySpinAngle < Math.PI / 2 && yRotation + ySpinAngle > -Math.PI / 2) {
-                    comp.transform(new double[] {1,                     0,                    0, 0, 
-                            0,  Math.cos(ySpinAngle), Math.sin(ySpinAngle), 0, 
-                            0, -Math.sin(ySpinAngle), Math.cos(ySpinAngle), 0, 
+                float ySpinAngle = (height * 0.5f - mouseY) * 0.0025f;
+                if(yRotation + ySpinAngle < Math.PI * 0.5 && yRotation + ySpinAngle > -Math.PI * 0.5) {
+                    float cosYSA = (float)Math.cos(ySpinAngle);
+                    float sinYSA = (float)Math.sin(ySpinAngle);
+                    comp.transform(new float[] {1,                     0,                    0, 0, 
+                            0,  cosYSA, sinYSA, 0, 
+                            0, -sinYSA, cosYSA, 0, 
                             0,                     0,                    0, 1});
 
                     yRotation += ySpinAngle;
@@ -164,28 +136,9 @@ public class Renderer extends JFrame
              * @param  e  key pressed on the keyboard
              * @return    void
              */
-            public void keyPressed(KeyEvent e)
-            {
-                int k = e.getKeyCode();
-                if(k ==  KeyEvent.VK_ESCAPE) {
-                    System.exit(0);
-                } else if(k == KeyEvent.VK_A) {
-                    if(!left)
-                        numberOfDirectionsMoving++;
-                    left = true;
-                } else if (k == KeyEvent.VK_D) {
-                    if(!right)
-                        numberOfDirectionsMoving++;
-                    right = true;
-                } else if (k == KeyEvent.VK_W) {
-                    if(!forward)
-                        numberOfDirectionsMoving++;
-                    forward = true;
-                } else if (k == KeyEvent.VK_S) {
-                    if(!backward)
-                        numberOfDirectionsMoving++;
-                    backward = true;
-                } 
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() ==  KeyEvent.VK_ESCAPE) {
+                    System.exit(0);}
             }
 
             /**
@@ -194,22 +147,7 @@ public class Renderer extends JFrame
              * @param  e  key released from the keyboard
              * @return    void
              */
-            public void keyReleased(KeyEvent e) {
-                int k = e.getKeyCode();
-                if(k == KeyEvent.VK_A) {
-                    left = false;
-                    numberOfDirectionsMoving--;
-                } else if (k == KeyEvent.VK_D) {
-                    right = false;
-                    numberOfDirectionsMoving--;
-                } else if (k == KeyEvent.VK_W) {
-                    forward = false;
-                    numberOfDirectionsMoving--;
-                } else if (k == KeyEvent.VK_S) {
-                    backward = false;
-                    numberOfDirectionsMoving--;
-                } 
-            }
+            public void keyReleased(KeyEvent e) {}
 
             /**
              * Updates when a key is typed.
@@ -245,11 +183,8 @@ public class Renderer extends JFrame
             public void mouseExited(MouseEvent event) {}
         }
 
-        class ScrollListener implements MouseWheelListener
-        {
-            public void mouseWheelMoved(MouseWheelEvent e) {
-
-            }
+        class ScrollListener implements MouseWheelListener {
+            public void mouseWheelMoved(MouseWheelEvent e) {}
         }
         comp.setPreferredSize(new Dimension(width, height));
         comp.addKeyListener(new KeyboardListener());
