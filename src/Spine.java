@@ -70,7 +70,7 @@ public class Spine
                 float cosYR = (float)Math.cos(0.29496);
                 float sinYR = (float)Math.sin(0.29496);
                 p.transform(new float[] {1, 0, 0, 0, 
-                        0,  cosYR, sinYR, 37.49034f, 
+                        0,  cosYR, sinYR, 36.12902f, 
                         0, -sinYR, cosYR, -15.7949f, 
                         0,  0,  0, 1});
                 //                                  p.transform(new float[] {1, 0, 0, 0, 
