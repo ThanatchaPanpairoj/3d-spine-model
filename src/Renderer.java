@@ -99,8 +99,8 @@ public class Renderer extends JFrame
                             -sinNXR, 0, cosNXR, 0, 
                             0, 0,                    0, 1});
 
-                    while(System.currentTimeMillis() - animationStartTime >= 16) {
-                        animationStartTime += 16;
+                    while(System.currentTimeMillis() - animationStartTime >= 16.66666) {
+                        animationStartTime += 16.66666;
                         comp.animate();
                     }
 

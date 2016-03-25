@@ -22,7 +22,7 @@ public class Triangle
         this.p3 = p3;
         distance = (int)p1.getZ(); 
     }
-    
+
     public void calculateNormal() {
         float a1 = p2.getX() - p1.getX();
         float a2 = p2.getY() - p1.getY();
@@ -35,7 +35,7 @@ public class Triangle
     }
 
     public void draw(Graphics2D g2) {
-        if((p2.getX() * normal.getX() + p2.getY() * normal.getY() + p2.getZ() * (normal.getZ() - 120)) < 0) {
+        if((p2.getX() * normal.getX() + p2.getY() * normal.getY() + p2.getZ() * (normal.getZ() - 110)) < 0) {
             g2.setColor(new Color(35 + lightingScale, 30 + lightingScale, lightingScale));
             g2.fillPolygon(new Polygon(new int[] {p1.get2Dx(), p2.get2Dx(), p3.get2Dx()}, 
                     new int[] {p1.get2Dy(), p2.get2Dy(), p3.get2Dy()}, 3));
@@ -50,7 +50,7 @@ public class Triangle
             //System.out.println((lightingScaleConstant));
             //System.out.println(Math.acos(-1 * (normal.getZ() - 100) * lightingScaleConstant));
         }
-        distance = (int)p1.getZ();
+        distance = (int)p1.getZ(); 
     }
 
     public void transform(float[] transformationMatrix) {
@@ -60,7 +60,7 @@ public class Triangle
     public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
         lightingScale = 110 + (int)((lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant);
     }
-    
+
     public boolean getL4() {
         return l4;
     }
