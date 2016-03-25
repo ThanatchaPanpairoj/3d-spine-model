@@ -32,7 +32,9 @@ import java.awt.Color;
 
 public class Renderer extends JFrame
 {
-    private float mouseX, mouseY, yRotation;
+    private float mouseX, mouseY, yRotation, xRotation;
+    private long startTime, animationStartTime;
+    private int frame;
 
     public static void main(String[] args) throws Exception {
         Renderer r = new Renderer();
@@ -46,6 +48,7 @@ public class Renderer extends JFrame
                 "null"));
 
         yRotation = 0;
+        xRotation = 0;
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize((int)dim.getWidth(), (int)dim.getHeight());
@@ -67,6 +70,9 @@ public class Renderer extends JFrame
         panel.setDoubleBuffered(true);
         panel.setBackground(Color.BLACK);
         RendererComponent comp = new RendererComponent(width, height);
+        startTime = System.currentTimeMillis();
+        animationStartTime = startTime;
+        frame = 0;
 
         class TimeListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
@@ -78,17 +84,39 @@ public class Renderer extends JFrame
                     float cosNYR = (float)Math.cos(-yRotation);
                     float sinYR = (float)Math.sin(yRotation);
                     float sinNYR = (float)Math.sin(-yRotation);
+                    float cosXR = (float)Math.cos(xRotation);
+                    float cosNXR = (float)Math.cos(-xRotation);
+                    float sinXR = (float)Math.sin(xRotation);
+                    float sinNXR = (float)Math.sin(-xRotation);
 
                     comp.transform(new float[] {1,                     0,                    0, 0, 
                             0,  cosNYR, sinNYR, 0, 
                             0, -sinNYR, cosNYR, 0, 
                             0,                     0,                    0, 1});
 
-                    float xSpinAngle = (width * 0.5f - mouseX) * 0.0025f;
-                    comp.transform(new float[] {(float)Math.cos(xSpinAngle), 0, (float)Math.sin(xSpinAngle), 0,
+                    comp.transform(new float[] {cosNXR, 0, sinNXR, 0,
                             0, 1,                    0, 0, 
-                            -(float)Math.sin(xSpinAngle), 0, (float)Math.cos(xSpinAngle), 0, 
+                            -sinNXR, 0, cosNXR, 0, 
                             0, 0,                    0, 1});
+
+                    while(System.currentTimeMillis() - animationStartTime >= 16) {
+                        animationStartTime += 16;
+                        comp.animate();
+                    }
+
+                    comp.transform(new float[] {cosXR, 0, sinXR, 0,
+                            0, 1,                    0, 0, 
+                            -sinXR, 0, cosXR, 0, 
+                            0, 0,                    0, 1});
+
+                    float xSpinAngle = (width * 0.5f - mouseX) * 0.0025f;
+                    float cosXSA = (float)Math.cos(xSpinAngle);
+                    float sinXSA = (float)Math.sin(xSpinAngle);
+                    comp.transform(new float[] {cosXSA, 0, sinXSA, 0,
+                            0, 1,                    0, 0, 
+                            -sinXSA, 0, cosXSA, 0, 
+                            0, 0,                    0, 1});
+                    xRotation += xSpinAngle;
 
                     comp.transform(new float[] {1,                     0,                  0, 0, 
                             0,  cosYR, sinYR, 0, 
@@ -108,6 +136,13 @@ public class Renderer extends JFrame
                     }
 
                     robot.mouseMove(width / 2 + 3, height / 2 + 25);
+
+                    frame++;
+                    if(System.currentTimeMillis() - startTime >= 1000) {
+                        startTime += 1000;
+                        comp.updateFPS(frame);
+                        frame = 0;
+                    }
 
                     comp.repaint();
                 }

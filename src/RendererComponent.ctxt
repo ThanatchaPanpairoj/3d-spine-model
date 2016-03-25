@@ -1,8 +1,14 @@
 #BlueJ class context
 comment0.params=width\ height
 comment0.target=RendererComponent(int,\ int)
-comment1.params=g
-comment1.target=void\ paintComponent(java.awt.Graphics)
-comment2.params=transformationMatrix
-comment2.target=void\ transform(float[])
-numComments=3
+comment1.params=s
+comment1.target=float\ getNum(java.lang.String)
+comment2.params=g
+comment2.target=void\ paintComponent(java.awt.Graphics)
+comment3.params=
+comment3.target=void\ animate()
+comment4.params=transformationMatrix
+comment4.target=void\ transform(float[])
+comment5.params=fps
+comment5.target=void\ updateFPS(int)
+numComments=6
