@@ -94,7 +94,7 @@ public class Renderer extends JFrame
                             0, -sinNYR, cosNYR, 0, 
                             0,                     0,                    0, 1});
 
-                    comp.transform(new float[] {cosNXR, 0, sinNXR, 0,
+                    comp.temporaryTransform(new float[] {cosNXR, 0, sinNXR, 0,
                             0, 1,                    0, 0, 
                             -sinNXR, 0, cosNXR, 0, 
                             0, 0,                    0, 1});
@@ -104,7 +104,7 @@ public class Renderer extends JFrame
                         comp.animate();
                     }
 
-                    comp.transform(new float[] {cosXR, 0, sinXR, 0,
+                    comp.temporaryTransform(new float[] {cosXR, 0, sinXR, 0,
                             0, 1,                    0, 0, 
                             -sinXR, 0, cosXR, 0, 
                             0, 0,                    0, 1});
@@ -124,7 +124,7 @@ public class Renderer extends JFrame
                             0,                     0,                  0, 1});
 
                     float ySpinAngle = (height * 0.5f - mouseY) * 0.0025f;
-                    if(yRotation + ySpinAngle < Math.PI * 0.5 && yRotation + ySpinAngle > -Math.PI * 0.5) {
+                    if(Math.abs(yRotation + ySpinAngle) < Math.PI * 0.5) {
                         float cosYSA = (float)Math.cos(ySpinAngle);
                         float sinYSA = (float)Math.sin(ySpinAngle);
                         comp.transform(new float[] {1,                     0,                    0, 0, 
@@ -215,8 +215,7 @@ public class Renderer extends JFrame
         comp.setVisible(true);
         comp.setDoubleBuffered(true);
 
-        final int DELAY = 1000 / 60;//60 frames per second
-        Timer t = new Timer(DELAY, new TimeListener());
+        Timer t = new Timer(0, new TimeListener());
         t.start();
 
         panel.setLayout(null);

@@ -176,6 +176,10 @@ public class RendererComponent extends JComponent
         //light.transform(transformationMatrix);
         spine.transform(transformationMatrix);
     }
+    
+    public void temporaryTransform(float[] transformationMatrix) {
+        spine.temporaryTransform(transformationMatrix);
+    }
 
     public void updateFPS(int fps) {
         this.fps = fps;

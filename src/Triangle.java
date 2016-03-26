@@ -49,8 +49,10 @@ public class Triangle
             //System.out.println((normal.getZ()));
             //System.out.println((lightingScaleConstant));
             //System.out.println(Math.acos(-1 * (normal.getZ() - 100) * lightingScaleConstant));
+            distance = (int)((p1.getZ() + p2.getZ() + p3.getZ() * 0.333)); 
+        } else {
+            distance = 999; 
         }
-        distance = (int)((p1.getZ() + p2.getZ() + p3.getZ() * 0.333)); 
     }
 
     public void transform(float[] transformationMatrix) {

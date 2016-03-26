@@ -114,6 +114,11 @@ public class Spine
             t.transform(transformationMatrix);
     }
 
+    public void temporaryTransform(float[] transformationMatrix) {
+        for(Point p : disk1Points)
+            p.transform(transformationMatrix);
+    }
+
     public void transformDisk1(float[] transformationMatrix) {
         float newX = x * transformationMatrix[0] + y * transformationMatrix[1] + z * transformationMatrix[2] + transformationMatrix[3];
         float newY = x * transformationMatrix[4] + y * transformationMatrix[5] + z * transformationMatrix[6] + transformationMatrix[7];
