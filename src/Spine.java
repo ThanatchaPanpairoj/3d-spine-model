@@ -132,10 +132,6 @@ public class Spine
     }
 
     public void rotateDisk1(float[] transformationMatrix) {
-        transformDisk1(new float[]{1, 0, 0, -x,
-                0, 1, 0, -y,
-                0, 0, 1, -z,
-                0, 0, 0, 1});
         for(Point p : disk1Points) {
             p.transform(transformationMatrix);
         }
@@ -144,6 +140,13 @@ public class Spine
             if(t.getL4()) {
                 t.transform(transformationMatrix);
             }
+    }
+    
+    public void resetPosition() {
+        transformDisk1(new float[]{1, 0, 0, -x,
+                0, 1, 0, -y,
+                0, 0, 1, -z,
+                0, 0, 0, 1});
     }
 
     public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {

@@ -98,10 +98,15 @@ public class Renderer extends JFrame
                             0, 1,                    0, 0, 
                             -sinNXR, 0, cosNXR, 0, 
                             0, 0,                    0, 1});
-
-                    while(System.currentTimeMillis() - animationStartTime >= 16.66666) {
+                    if(System.currentTimeMillis() - animationStartTime >= 16.66666) {
+                        comp.animateStep1();
+                        comp.animateStep2();
                         animationStartTime += 16.66666;
-                        comp.animate();
+                        while(System.currentTimeMillis() - animationStartTime >= 16.66666) {
+                            comp.animateStep2();
+                            animationStartTime += 16.66666;
+                        }
+                        comp.animateStep3();
                     }
 
                     comp.temporaryTransform(new float[] {cosXR, 0, sinXR, 0,
