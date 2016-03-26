@@ -132,16 +132,12 @@ public class Spine
     }
 
     public void rotateDisk1(float[] transformationMatrix) {
+        transformDisk1(new float[]{1, 0, 0, -x,
+                0, 1, 0, -y,
+                0, 0, 1, -z,
+                0, 0, 0, 1});
         for(Point p : disk1Points) {
-            p.transform(new float[]{1, 0, 0, -x,
-                    0, 1, 0, -y,
-                    0, 0, 1, -z,
-                    0, 0, 0, 1});
             p.transform(transformationMatrix);
-            p.transform(new float[]{1, 0, 0, x,
-                    0, 1, 0, y,
-                    0, 0, 1, z,
-                    0, 0, 0, 1});
         }
 
         for(Triangle t : faces)

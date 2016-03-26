@@ -38,9 +38,6 @@ public class RendererComponent extends JComponent
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("L4_Position.tab")));
 
             int i = 0;
-            float x = 0;
-            float y = -76.61936f;
-            float z = 0;
             double xa = 0;
             double ya = 0;
             double za = 0;
@@ -68,14 +65,14 @@ public class RendererComponent extends JComponent
                     comma5 = line.indexOf(',', comma4 + 1);
                     comma6 = line.indexOf(',', comma5 + 1);
                     nx = getNum(line.substring(14, comma1));
-                    ny = -getNum(line.substring(comma1 + 1, comma2));
+                    ny = 73.61936f-getNum(line.substring(comma1 + 1, comma2));
                     nz = getNum(line.substring(comma2 + 1, comma3));
 //                    nxa = Math.toRadians(getNum(line.substring(comma4 + 1, comma5)));
   	                  nya = Math.toRadians(getNum(line.substring(comma5 + 1, comma6)));
 //                    nza = Math.toRadians(getNum(line.substring(comma6 + 1)));
-                    translations.add(new float[]{1, 0, 0, nx - x,
-                            0, 1, 0, ny - y,
-                            0, 0, 1, nz - z,
+                    translations.add(new float[]{1, 0, 0, nx,
+                            0, 1, 0, ny,
+                            0, 0, 1, nz,
                             0, 0, 0, 1});
 //                     xRotations.add(new float[] {(float)Math.cos(nxa - xa), 0, (float)Math.sin(nxa - xa), 0,
 //                             0, 1,                    0, 0, 
@@ -89,18 +86,15 @@ public class RendererComponent extends JComponent
 //                             -(float)Math.sin(nza - za), (float)Math.cos(nza - za), 0, 0, 
 //                             0, 0,                    1, 0,        
 //                             0, 0,                    0, 1});
-                    x = nx;
-                    y = ny;
-                    z = nz;
 //                    xa = nxa;
                     ya = nya;
 //                    za = nza;
                 }
                 i++;
             }
-            translations.add(new float[]{1, 0, 0, -x,
-                    0, 1, 0, -76.61936f-y,
-                    0, 0, 1, -z,
+            translations.add(new float[]{1, 0, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, 0,
                     0, 0, 0, 1});
 //             xRotations.add(new float[] {(float)Math.cos(-xa), 0, (float)Math.sin(-xa), 0,
 //                     0, 1,                    0, 0, 
@@ -165,8 +159,7 @@ public class RendererComponent extends JComponent
             //spine.rotateDisk1(xRotations.get(transformation));
             spine.rotateDisk1(yRotations.get(transformation));
             //spine.rotateDisk1(zRotations.get(transformation));
-            spine.transformDisk1(translations.get(transformation));
-            transformation++;
+            spine.transformDisk1(translations.get(transformation++));
             if(transformation == 632)
                 transformation = 0;
         }
