@@ -20,7 +20,7 @@ public class Triangle
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
-        distance = (int)p1.getZ(); 
+        distance = (int)((p1.getZ() + p2.getZ() + p3.getZ() * 0.333)); 
     }
 
     public void calculateNormal() {
@@ -50,7 +50,7 @@ public class Triangle
             //System.out.println((lightingScaleConstant));
             //System.out.println(Math.acos(-1 * (normal.getZ() - 100) * lightingScaleConstant));
         }
-        distance = (int)p1.getZ(); 
+        distance = (int)((p1.getZ() + p2.getZ() + p3.getZ() * 0.333)); 
     }
 
     public void transform(float[] transformationMatrix) {

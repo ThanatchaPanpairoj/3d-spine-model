@@ -29,9 +29,9 @@ public class RendererComponent extends JComponent
         spine = new Spine();
         light = new Point(0, -1, 0);
         translations = new ArrayList<float[]>(632);
-        xRotations = new ArrayList<float[]>(632);
+//        xRotations = new ArrayList<float[]>(632);
         yRotations = new ArrayList<float[]>(632);
-        zRotations = new ArrayList<float[]>(632);
+//        zRotations = new ArrayList<float[]>(632);
 
         String line = null;
         try {
@@ -70,31 +70,31 @@ public class RendererComponent extends JComponent
                     nx = getNum(line.substring(14, comma1));
                     ny = -getNum(line.substring(comma1 + 1, comma2));
                     nz = getNum(line.substring(comma2 + 1, comma3));
-                    nxa = Math.toRadians(getNum(line.substring(comma4 + 1, comma5)));
-                    nya = Math.toRadians(getNum(line.substring(comma5 + 1, comma6)));
-                    nza = Math.toRadians(getNum(line.substring(comma6 + 1)));
+//                    nxa = Math.toRadians(getNum(line.substring(comma4 + 1, comma5)));
+  	                  nya = Math.toRadians(getNum(line.substring(comma5 + 1, comma6)));
+//                    nza = Math.toRadians(getNum(line.substring(comma6 + 1)));
                     translations.add(new float[]{1, 0, 0, nx - x,
                             0, 1, 0, ny - y,
                             0, 0, 1, nz - z,
                             0, 0, 0, 1});
-                    xRotations.add(new float[] {(float)Math.cos(nxa - xa), 0, (float)Math.sin(nxa - xa), 0,
-                            0, 1,                    0, 0, 
-                            -(float)Math.sin(nxa - xa), 0, (float)Math.cos(nxa - xa), 0, 
-                            0, 0,                    0, 1});
+//                     xRotations.add(new float[] {(float)Math.cos(nxa - xa), 0, (float)Math.sin(nxa - xa), 0,
+//                             0, 1,                    0, 0, 
+//                             -(float)Math.sin(nxa - xa), 0, (float)Math.cos(nxa - xa), 0, 
+//                             0, 0,                    0, 1});
                     yRotations.add(new float[] {1,                     0,                    0, 0, 
                             0,  (float)Math.cos(nya - ya), (float)Math.sin(nya - ya), 0, 
                             0, -(float)Math.sin(nya - ya), (float)Math.cos(nya - ya), 0, 
                             0,                     0,                    0, 1});
-                    zRotations.add(new float[] {(float)Math.cos(nza - za), (float)Math.sin(nza - za), 0, 0,
-                            -(float)Math.sin(nza - za), (float)Math.cos(nza - za), 0, 0, 
-                            0, 0,                    1, 0,        
-                            0, 0,                    0, 1});
+//                     zRotations.add(new float[] {(float)Math.cos(nza - za), (float)Math.sin(nza - za), 0, 0,
+//                             -(float)Math.sin(nza - za), (float)Math.cos(nza - za), 0, 0, 
+//                             0, 0,                    1, 0,        
+//                             0, 0,                    0, 1});
                     x = nx;
                     y = ny;
                     z = nz;
-                    xa = nxa;
+//                    xa = nxa;
                     ya = nya;
-                    za = nza;
+//                    za = nza;
                 }
                 i++;
             }
@@ -102,18 +102,18 @@ public class RendererComponent extends JComponent
                     0, 1, 0, -76.61936f-y,
                     0, 0, 1, -z,
                     0, 0, 0, 1});
-            xRotations.add(new float[] {(float)Math.cos(-xa), 0, (float)Math.sin(-xa), 0,
-                    0, 1,                    0, 0, 
-                    -(float)Math.sin(-xa), 0, (float)Math.cos(-xa), 0, 
-                    0, 0,                    0, 1});
+//             xRotations.add(new float[] {(float)Math.cos(-xa), 0, (float)Math.sin(-xa), 0,
+//                     0, 1,                    0, 0, 
+//                     -(float)Math.sin(-xa), 0, (float)Math.cos(-xa), 0, 
+//                     0, 0,                    0, 1});
             yRotations.add(new float[] {1,                     0,                    0, 0, 
                     0,  (float)Math.cos(-ya), (float)Math.sin(-ya), 0, 
                     0, -(float)Math.sin(-ya), (float)Math.cos(-ya), 0, 
                     0,                     0,                    0, 1});
-            zRotations.add(new float[] {(float)Math.cos(-za), (float)Math.sin(-za), 0, 0,
-                    -(float)Math.sin(-za), (float)Math.cos(-za), 0, 0, 
-                    0, 0,                    1, 0,        
-                    0, 0,                    0, 1});
+//             zRotations.add(new float[] {(float)Math.cos(-za), (float)Math.sin(-za), 0, 0,
+//                     -(float)Math.sin(-za), (float)Math.cos(-za), 0, 0, 
+//                     0, 0,                    1, 0,        
+//                     0, 0,                    0, 1});
 
             bufferedReader.close();         
         }
