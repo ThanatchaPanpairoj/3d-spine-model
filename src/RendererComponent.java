@@ -175,11 +175,27 @@ public class RendererComponent extends JComponent
         spine.transform(transformationMatrix);
     }
 
+    public void transformDisc1(float[] transformationMatrix) {
+        spine.transformDisc1(transformationMatrix);
+    }
+    
     public void rotateDisc1(float[] transformationMatrix) {
         spine.rotateDisc1(transformationMatrix);
     }
 
     public void updateFPS(int fps) {
         this.fps = fps;
+    }
+    
+    public float getDisc1X() {
+        return spine.getX();
+    }
+
+    public float getDisc1Y() {
+        return spine.getY();
+    }
+
+    public float getDisc1Z() {
+        return spine.getZ();
     }
 }

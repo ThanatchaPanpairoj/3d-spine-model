@@ -138,14 +138,25 @@ public class Spine
     }
     
     public void resetPosition() {
-        transformDisc1(new float[]{1, 0, 0, -x,
-                0, 1, 0, -y,
-                0, 0, 1, -z,
-                0, 0, 0, 1});
+        x = 0;
+        y = 0;
+        z = 0;
     }
 
     public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
         for(Triangle f : faces)
             f.calculateNewlightingScale(lightX, lightY, lightZ);
+    }
+    
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getZ() {
+        return z;
     }
 }
