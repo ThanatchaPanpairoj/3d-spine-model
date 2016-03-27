@@ -94,12 +94,9 @@ public class Renderer extends JFrame
                             0,                     0,                    0, 1});
 
                     if(System.currentTimeMillis() - animationStartTime >= 16.66666) {
-                        float nDisc1X = -comp.getDisc1X();
-                        float nDisc1Y = -comp.getDisc1Y();
-                        float nDisc1Z = -comp.getDisc1Z();
-                        comp.rotateDisc1(new float[] {cosNXR, 0, sinNXR, nDisc1X,
-                                0, 1,                    0, nDisc1Y, 
-                                -sinNXR, 0, cosNXR, nDisc1Z, 
+                        comp.rotateDisc1(new float[] {cosNXR, 0, sinNXR, 0,
+                                0, 1,                    0, 0, 
+                                -sinNXR, 0, cosNXR, 0, 
                                 0, 0,                    0, 1});
                         comp.animateStep1();
                         comp.animateStep2();
