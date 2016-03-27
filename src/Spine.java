@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.io.*;
 
 /**
- * Write a description of class SpinalDisk here.
+ * Write a description of class SpinalDisc here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
@@ -14,15 +14,15 @@ import java.io.*;
 public class Spine
 {
     private float x, y, z;
-    private Point[] disk1Points, disk2Points;
+    private Point[] disc1Points, disc2Points;
     private ArrayList<Triangle> faces;
 
     public Spine() {
         this.x = 0;
         this.y = 0;
         this.z = 0;
-        this.disk1Points = new Point[7847];
-        this.disk2Points = new Point[7847];
+        this.disc1Points = new Point[7847];
+        this.disc2Points = new Point[7847];
         this.faces = new ArrayList<Triangle>(30852);
 
         String line = null;
@@ -33,11 +33,11 @@ public class Spine
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        disk1Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
+                        disc1Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
                     else if(i < 23275)
-                        faces.add(new Triangle(true, disk1Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
-                                disk1Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
-                                disk1Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
+                        faces.add(new Triangle(true, disc1Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
+                                disc1Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
+                                disc1Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
                 i++;
             }
 
@@ -58,15 +58,15 @@ public class Spine
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        disk2Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
+                        disc2Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
                     else if(i < 23275)
-                        faces.add(new Triangle(false, disk2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
-                                disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
-                                disk2Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
+                        faces.add(new Triangle(false, disc2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
+                                disc2Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
+                                disc2Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
                 i++;
             }
 
-            for(Point p : disk2Points) {
+            for(Point p : disc2Points) {
                 float cosYR = (float)Math.cos(0.29496);
                 float sinYR = (float)Math.sin(0.29496);
                 p.transform(new float[] {1, 0, 0, 0, 
@@ -104,22 +104,17 @@ public class Spine
     }
 
     public void transform(float[] transformationMatrix) {
-        for(Point p : disk1Points)
+        for(Point p : disc1Points)
             p.transform(transformationMatrix);
 
-        for(Point p : disk2Points)
+        for(Point p : disc2Points)
             p.transform(transformationMatrix);
 
         for(Triangle t : faces)
             t.transform(transformationMatrix);
     }
 
-    public void temporaryTransform(float[] transformationMatrix) {
-        for(Point p : disk1Points)
-            p.transform(transformationMatrix);
-    }
-
-    public void transformDisk1(float[] transformationMatrix) {
+    public void transformDisc1(float[] transformationMatrix) {
         float newX = x * transformationMatrix[0] + y * transformationMatrix[1] + z * transformationMatrix[2] + transformationMatrix[3];
         float newY = x * transformationMatrix[4] + y * transformationMatrix[5] + z * transformationMatrix[6] + transformationMatrix[7];
         float newZ = x * transformationMatrix[8] + y * transformationMatrix[9] + z * transformationMatrix[10] + transformationMatrix[11];
@@ -127,12 +122,12 @@ public class Spine
         y = newY;
         z = newZ;
         //System.out.println(x + " " + y + " " + z);
-        for(Point p : disk1Points)
+        for(Point p : disc1Points)
             p.transform(transformationMatrix);
     }
 
-    public void rotateDisk1(float[] transformationMatrix) {
-        for(Point p : disk1Points) {
+    public void rotateDisc1(float[] transformationMatrix) {
+        for(Point p : disc1Points) {
             p.transform(transformationMatrix);
         }
 
@@ -143,7 +138,7 @@ public class Spine
     }
     
     public void resetPosition() {
-        transformDisk1(new float[]{1, 0, 0, -x,
+        transformDisc1(new float[]{1, 0, 0, -x,
                 0, 1, 0, -y,
                 0, 0, 1, -z,
                 0, 0, 0, 1});

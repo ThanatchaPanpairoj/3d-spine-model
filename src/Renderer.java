@@ -80,10 +80,9 @@ public class Renderer extends JFrame
                     mouseX = (float)MouseInfo.getPointerInfo().getLocation().getX() - (float)getLocation().getX() - 3f;
                     mouseY = (float)MouseInfo.getPointerInfo().getLocation().getY() - (float)getLocation().getY() - 25f;
 
-                    float cosYR = (float)Math.cos(yRotation);
                     float cosNYR = (float)Math.cos(-yRotation);
-                    float sinYR = (float)Math.sin(yRotation);
                     float sinNYR = (float)Math.sin(-yRotation);
+
                     float cosXR = (float)Math.cos(xRotation);
                     float cosNXR = (float)Math.cos(-xRotation);
                     float sinXR = (float)Math.sin(xRotation);
@@ -94,11 +93,11 @@ public class Renderer extends JFrame
                             0, -sinNYR, cosNYR, 0, 
                             0,                     0,                    0, 1});
 
-                    comp.temporaryTransform(new float[] {cosNXR, 0, sinNXR, 0,
-                            0, 1,                    0, 0, 
-                            -sinNXR, 0, cosNXR, 0, 
-                            0, 0,                    0, 1});
                     if(System.currentTimeMillis() - animationStartTime >= 16.66666) {
+                        comp.rotateDisc1(new float[] {cosNXR, 0, sinNXR, 0,
+                                0, 1,                    0, 0, 
+                                -sinNXR, 0, cosNXR, 0, 
+                                0, 0,                    0, 1});
                         comp.animateStep1();
                         comp.animateStep2();
                         animationStartTime += 16.66666;
@@ -107,12 +106,11 @@ public class Renderer extends JFrame
                             animationStartTime += 16.66666;
                         }
                         comp.animateStep3();
+                        comp.rotateDisc1(new float[] {cosXR, 0, sinXR, 0,
+                                0, 1,                    0, 0, 
+                                -sinXR, 0, cosXR, 0, 
+                                0, 0,                    0, 1});
                     }
-
-                    comp.temporaryTransform(new float[] {cosXR, 0, sinXR, 0,
-                            0, 1,                    0, 0, 
-                            -sinXR, 0, cosXR, 0, 
-                            0, 0,                    0, 1});
 
                     float xSpinAngle = (width * 0.5f - mouseX) * 0.0025f;
                     float cosXSA = (float)Math.cos(xSpinAngle);
@@ -123,22 +121,17 @@ public class Renderer extends JFrame
                             0, 0,                    0, 1});
                     xRotation += xSpinAngle;
 
+                    float ySpinAngle = (height * 0.5f - mouseY) * 0.0025f;
+                    if(Math.abs(yRotation + ySpinAngle) < Math.PI * 0.5) {
+                        yRotation += ySpinAngle;
+                    }
+                    float cosYR = (float)Math.cos(yRotation);
+                    float sinYR = (float)Math.sin(yRotation);
+
                     comp.transform(new float[] {1,                     0,                  0, 0, 
                             0,  cosYR, sinYR, 0, 
                             0, -sinYR, cosYR, 0, 
                             0,                     0,                  0, 1});
-
-                    float ySpinAngle = (height * 0.5f - mouseY) * 0.0025f;
-                    if(Math.abs(yRotation + ySpinAngle) < Math.PI * 0.5) {
-                        float cosYSA = (float)Math.cos(ySpinAngle);
-                        float sinYSA = (float)Math.sin(ySpinAngle);
-                        comp.transform(new float[] {1,                     0,                    0, 0, 
-                                0,  cosYSA, sinYSA, 0, 
-                                0, -sinYSA, cosYSA, 0, 
-                                0,                     0,                    0, 1});
-
-                        yRotation += ySpinAngle;
-                    }
 
                     robot.mouseMove(width / 2 + 3, height / 2 + 25);
 

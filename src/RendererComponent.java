@@ -159,15 +159,15 @@ public class RendererComponent extends JComponent
     }
 
     public void animateStep2() {
-        //spine.rotateDisk1(xRotations.get(transformation));
-        spine.rotateDisk1(yRotations.get(transformation++));
-        //spine.rotateDisk1(zRotations.get(transformation));
+        //spine.rotateDisc1(xRotations.get(transformation));
+        spine.rotateDisc1(yRotations.get(transformation++));
+        //spine.rotateDisc1(zRotations.get(transformation));
         if(transformation == 632)
             transformation = 0;
     }
 
     public void animateStep3() {
-        spine.transformDisk1(translations.get(transformation == 0 ? 631 : transformation - 1));
+        spine.transformDisc1(translations.get(transformation == 0 ? 631 : transformation - 1));
     }
 
     public void transform(float[] transformationMatrix) {
@@ -175,8 +175,8 @@ public class RendererComponent extends JComponent
         spine.transform(transformationMatrix);
     }
 
-    public void temporaryTransform(float[] transformationMatrix) {
-        spine.temporaryTransform(transformationMatrix);
+    public void rotateDisc1(float[] transformationMatrix) {
+        spine.rotateDisc1(transformationMatrix);
     }
 
     public void updateFPS(int fps) {
