@@ -15,7 +15,7 @@ public class Spine
 {
     private float x, y, z;
     private Point[] disc1Points, disc2Points;
-    private ArrayList<Triangle> faces, disc1Faces;
+    private ArrayList<Triangle> faces;
 
     public Spine() {
         this.x = 0;
@@ -24,24 +24,20 @@ public class Spine
         this.disc1Points = new Point[7847];
         this.disc2Points = new Point[7847];
         this.faces = new ArrayList<Triangle>(30852);
-        this.disc1Faces = new ArrayList<Triangle>(15426);
 
         String line = null;
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("L4.shl")));
 
             int i = 0;
-            Triangle currentTriangle = null;
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
                         disc1Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
-                    else if(i < 23275) {
-                        faces.add(currentTriangle = new Triangle(disc1Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
+                    else if(i < 23275)
+                        faces.add(new Triangle(true, disc1Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disc1Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
                                 disc1Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
-                        disc1Faces.add(currentTriangle);
-                    }
                 i++;
             }
 
@@ -64,7 +60,7 @@ public class Spine
                     if(i < 7849)
                         disc2Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
                     else if(i < 23275)
-                        faces.add(new Triangle(disc2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
+                        faces.add(new Triangle(false, disc2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disc2Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
                                 disc2Points[Integer.parseInt(line.substring(line.indexOf(" ", line.indexOf(" ", 2) + 1) + 1)) - 1]));
                 i++;
@@ -135,10 +131,12 @@ public class Spine
             p.transform(transformationMatrix);
         }
 
-        for(Triangle t : disc1Faces)
+        for(Triangle t : faces)
+            if(t.getL4()) {
                 t.transform(transformationMatrix);
+            }
     }
-
+    
     public void resetPosition() {
         transformDisc1(new float[]{1, 0, 0, -x,
                 0, 1, 0, -y,

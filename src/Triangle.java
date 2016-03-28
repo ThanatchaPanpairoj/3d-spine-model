@@ -12,9 +12,11 @@ public class Triangle
 {
     private int distance, lightingScale;
     private float lightingScaleConstant;
+    private boolean l4;
     private Point p1, p2, p3, normal;
 
-    public Triangle(Point p1, Point p2, Point p3) {
+    public Triangle(boolean l4, Point p1, Point p2, Point p3) {
+        this.l4 = l4;
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
@@ -59,6 +61,10 @@ public class Triangle
 
     public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
         lightingScale = 110 + (int)((lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant);
+    }
+
+    public boolean getL4() {
+        return l4;
     }
 
     public int getDistance() {
