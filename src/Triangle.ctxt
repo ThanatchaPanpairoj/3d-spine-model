@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=l4\ p1\ p2\ p3
-comment0.target=Triangle(boolean,\ Point,\ Point,\ Point)
+comment0.params=p1\ p2\ p3
+comment0.target=Triangle(Point,\ Point,\ Point)
 comment1.params=
 comment1.target=void\ calculateNormal()
 comment2.params=g2
@@ -10,7 +10,5 @@ comment3.target=void\ transform(float[])
 comment4.params=lightX\ lightY\ lightZ
 comment4.target=void\ calculateNewlightingScale(float,\ float,\ float)
 comment5.params=
-comment5.target=boolean\ getL4()
-comment6.params=
-comment6.target=int\ getDistance()
-numComments=7
+comment5.target=int\ getDistance()
+numComments=6
