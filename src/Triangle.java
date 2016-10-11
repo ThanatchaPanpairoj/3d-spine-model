@@ -51,13 +51,13 @@ public class Triangle
     }
 
     public void drawTriangle(int[] img) {
-// Bounding box
+        // Bounding box
         int maxX = (int)(Math.min(hWIDTH, (int)(Math.max(Math.max(p1.get2Dx(), p2.get2Dx()), p3.get2Dx()))));
         int minX = (int)(Math.max(-hWIDTH, (int)(Math.min(Math.min(p1.get2Dx(), p2.get2Dx()), p3.get2Dx()))));
         int maxY = (int)(Math.min(hHEIGHT, (int)(Math.max(Math.max(p1.get2Dy(), p2.get2Dy()), p3.get2Dy()))));
         int minY = (int)(Math.max(-hHEIGHT, (int)(Math.min(Math.min(p1.get2Dy(), p2.get2Dy()), p3.get2Dy()))));
 
-    // Delta Precalculations
+        // Delta Precalculations
         double bay = (p2.get2Dy() - p1.get2Dy());
         double cby = (p3.get2Dy() - p2.get2Dy());
         double acy = (p1.get2Dy() - p3.get2Dy());
@@ -65,12 +65,8 @@ public class Triangle
         double cbx = (p3.get2Dx() - p2.get2Dx());
         double acx = (p1.get2Dx() - p3.get2Dx());
 
-    // Color
-        //int color = (255 << 24) | ((134 + (int)(101 * lightingScale)) << 16) | ((135 + (int)(100 * lightingScale)) << 8) | (145 + (int)(90 * lightingScale));
-
-    // Interpolation Precalculations
-        double invArea = 1 / ((p3.get2Dx() - p1.get2Dx()) * (p2.get2Dy() - p1.get2Dy())
-        - (p3.get2Dy() - p1.get2Dy()) * (p2.get2Dx() - p1.get2Dx()));
+        // Interpolation Precalculations
+        double invArea = 1 / (acy * bax - acx * bay);
         double invZ1 = 1 / p1.getZ();
         double invZ2 = 1 / p2.getZ();
         double invZ3 = 1 / p3.getZ();
@@ -83,7 +79,7 @@ public class Triangle
         for (int pX = minX; pX <= maxX; pX+=1, xaxbay += bay, xbxcby += cby, xcxacy += acy) {
             boolean drawn = false;
 
-        // Row Precalculations
+            // Row Precalculations
             double yaybax = (maxY - p1.get2Dy()) * bax;
             double ybycbx = (maxY - p2.get2Dy()) * cbx;
             double ycyacx = (maxY - p3.get2Dy()) * acx;
