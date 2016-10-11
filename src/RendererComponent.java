@@ -1,8 +1,11 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import java.io.*;
 
@@ -20,6 +23,7 @@ public class RendererComponent extends JComponent
     private Point light;
     private Spine spine;
     private ArrayList<float[]> translations, xRotations, yRotations, zRotations;
+    private BufferedImage canvas;
 
     public RendererComponent(int width, int height) {
         this.hWidth = width >> 1;
@@ -32,7 +36,7 @@ public class RendererComponent extends JComponent
         //        xRotations = new ArrayList<float[]>(632);
         yRotations = new ArrayList<float[]>(632);
         //        zRotations = new ArrayList<float[]>(632);
-
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         String line = null;
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("L4_Position.tab")));
@@ -132,6 +136,8 @@ public class RendererComponent extends JComponent
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int[] pixels = ((DataBufferInt)canvas.getRaster().getDataBuffer()).getData();
+        Arrays.fill(pixels, (new Color(0, 0, 0, 0)).getRGB());
         Graphics2D g2 = (Graphics2D)g;
         g2.translate(hWidth, hHeight);
 
@@ -146,8 +152,8 @@ public class RendererComponent extends JComponent
         g2.drawString("ESC to exit", -hWidth + 5, - hHeight + 17);
         g2.drawString("FPS: " + fps, hWidth - 50, - hHeight + 17);
 
-        spine.draw(g2);
-
+        spine.draw(pixels);
+        g.drawImage(canvas, -hWidth, -hHeight, this);
         transform(new float[] {1, 0, 0,     0, 
                 0, 1, 0,     0, 
                 0, 0, 1, -110, 

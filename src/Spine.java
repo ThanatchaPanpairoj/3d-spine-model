@@ -14,15 +14,15 @@ import java.io.*;
 public class Spine
 {
     private float x, y, z;
-    private Point[] disc1Points, disc2Points;
+    private Vertex[] disc1Points, disc2Points;
     private ArrayList<Triangle> faces, disc1Faces;
 
     public Spine() {
         this.x = 0;
         this.y = 0;
         this.z = 0;
-        this.disc1Points = new Point[7847];
-        this.disc2Points = new Point[7847];
+        this.disc1Points = new Vertex[7847];
+        this.disc2Points = new Vertex[7847];
         this.faces = new ArrayList<Triangle>(30852);
         this.disc1Faces = new ArrayList<Triangle>(15426);
 
@@ -35,7 +35,7 @@ public class Spine
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        disc1Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
+                        disc1Points[i - 2] = new Vertex(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)), 145, 140, 140);
                     else if(i < 23275) {
                         faces.add(currentTriangle = new Triangle(disc1Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disc1Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
@@ -62,7 +62,7 @@ public class Spine
             while((line = bufferedReader.readLine()) != null) {
                 if(i > 1)
                     if(i < 7849)
-                        disc2Points[i - 2] = new Point(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)));
+                        disc2Points[i - 2] = new Vertex(-getNum(line.substring(0, 10)), -getNum(line.substring(11, 22)), getNum(line.substring(22)), 145, 140, 140);
                     else if(i < 23275)
                         faces.add(new Triangle(disc2Points[Integer.parseInt(line.substring(2, line.indexOf(" ", 2))) - 1], 
                                 disc2Points[Integer.parseInt(line.substring(line.indexOf(" ", 2) + 1, line.indexOf(" ", line.indexOf(" ", 2) + 1))) - 1], 
@@ -70,7 +70,7 @@ public class Spine
                 i++;
             }
 
-            for(Point p : disc2Points) {
+            for(Vertex p : disc2Points) {
                 float cosYR = (float)Math.cos(0.29496);
                 float sinYR = (float)Math.sin(0.29496);
                 p.transform(new float[] {1, 0, 0, 0, 
@@ -92,8 +92,7 @@ public class Spine
             System.out.println("Error reading file 'L5.shl'");                  
             ex.printStackTrace();
         }
-
-        for(Triangle t : faces) 
+        for (Triangle t : faces)
             t.calculateNormal();
     }
 
@@ -101,18 +100,21 @@ public class Spine
         return s.charAt(0) == ' ' ? getNum(s.substring(1)) : Float.parseFloat(s);
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(int[] pixels) {
         faces.sort(new DistanceComparator());
         for(int i = 0; i < 30852; i++)
-            faces.get(i).draw(g2);
+            faces.get(i).draw(pixels);
     }
 
     public void transform(float[] transformationMatrix) {
-        for(Point p : disc1Points)
+        for(Vertex p : disc1Points) {
             p.transform(transformationMatrix);
-
-        for(Point p : disc2Points)
+            p.transformNormal(transformationMatrix);
+        }
+        for(Vertex p : disc2Points) {
             p.transform(transformationMatrix);
+            p.transformNormal(transformationMatrix);
+        }
 
         for(Triangle t : faces)
             t.transform(transformationMatrix);
@@ -126,13 +128,14 @@ public class Spine
         y = newY;
         z = newZ;
         //System.out.println(x + " " + y + " " + z);
-        for(Point p : disc1Points)
+        for(Vertex p : disc1Points)
             p.transform(transformationMatrix);
     }
 
     public void rotateDisc1(float[] transformationMatrix) {
-        for(Point p : disc1Points) {
+        for(Vertex p : disc1Points) {
             p.transform(transformationMatrix);
+            p.transformNormal(transformationMatrix);
         }
 
         for(Triangle t : disc1Faces)
@@ -147,7 +150,9 @@ public class Spine
     }
 
     public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
-        for(Triangle f : faces)
-            f.calculateNewlightingScale(lightX, lightY, lightZ);
+        for(Vertex v : disc1Points)
+            v.calculateNewlightingScale(lightX, lightY, lightZ);
+        for (Vertex v : disc2Points)
+            v.calculateNewlightingScale(lightX, lightY, lightZ);
     }
 }

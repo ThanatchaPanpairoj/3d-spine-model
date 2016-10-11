@@ -136,7 +136,7 @@ public class Renderer extends JFrame
                             0, -sinYR, cosYR, 0, 
                             0,                     0,                  0, 1});
 
-                    robot.mouseMove(width / 2 + 3, height / 2 + 25);
+                    robot.mouseMove(midX, midY);
 
                     frame++;
                     if(System.currentTimeMillis() - startTime >= 1000) {
