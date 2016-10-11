@@ -61,6 +61,9 @@ public class Renderer extends JFrame
 
         Robot robot = new Robot();
         robot.mouseMove(width / 2 + 3, height / 2 + 25);
+        int midX = (int)MouseInfo.getPointerInfo().getLocation().getX();
+        int midY = (int)MouseInfo.getPointerInfo().getLocation().getY();
+ 
         //System.out.println("" + width + ", " + height);
 
         //         frame.setUndecorated(true);
@@ -77,8 +80,8 @@ public class Renderer extends JFrame
         class TimeListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 if(comp.hasFocus()) {
-                    mouseX = (float)MouseInfo.getPointerInfo().getLocation().getX() - (float)getLocation().getX() - 3f;
-                    mouseY = (float)MouseInfo.getPointerInfo().getLocation().getY() - (float)getLocation().getY() - 25f;
+                    int mouseX = (int)MouseInfo.getPointerInfo().getLocation().getX();
+                    int mouseY = (int)MouseInfo.getPointerInfo().getLocation().getY();
 
                     float cosNYR = (float)Math.cos(-yRotation);
                     float sinNYR = (float)Math.sin(-yRotation);
@@ -112,7 +115,7 @@ public class Renderer extends JFrame
                                 0, 0,                    0, 1});
                     }
 
-                    float xSpinAngle = (width * 0.5f - mouseX) * 0.0025f;
+                    float xSpinAngle = (midX - mouseX) * 0.0025f;
                     float cosXSA = (float)Math.cos(xSpinAngle);
                     float sinXSA = (float)Math.sin(xSpinAngle);
                     comp.transform(new float[] {cosXSA, 0, sinXSA, 0,
@@ -121,7 +124,7 @@ public class Renderer extends JFrame
                             0, 0,                    0, 1});
                     xRotation += xSpinAngle;
 
-                    float ySpinAngle = (height * 0.5f - mouseY) * 0.0025f;
+                    float ySpinAngle = (midY - mouseY) * 0.0025f;
                     if(Math.abs(yRotation + ySpinAngle) < Math.PI * 0.5) {
                         yRotation += ySpinAngle;
                     }
