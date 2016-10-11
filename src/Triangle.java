@@ -11,7 +11,7 @@ import java.awt.Toolkit;
  */
 public class Triangle
 {
-    private int distance, lightingScale;
+    private int lightingScale;
     private float lightingScaleConstant;
     private Vertex p1, p2, p3;
     private Point normal;
@@ -24,7 +24,6 @@ public class Triangle
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
-        distance = (int)(p1.getZ() + p2.getZ() + p3.getZ()); 
     }
 
     public void calculateNormal() {
@@ -41,16 +40,13 @@ public class Triangle
         p3.addNormal(normal);
     }
 
-    public void draw(int[] img) {
+    public void draw(int[] img, double[] zBuffer) {
         if((p2.getX() * normal.getX() + p2.getY() * normal.getY() + p2.getZ() * (normal.getZ() - 110)) < 0) {
-            drawTriangle(img);
-            distance = (int)(p1.getZ() + p2.getZ() + p3.getZ());
-        } else {
-            distance = 999; 
+            drawTriangle(img, zBuffer);
         }
     }
 
-    public void drawTriangle(int[] img) {
+    public void drawTriangle(int[] img, double[] zBuffer) {
         // Bounding box
         int maxX = (int)(Math.min(hWIDTH, (int)(Math.max(Math.max(p1.get2Dx(), p2.get2Dx()), p3.get2Dx()))));
         int minX = (int)(Math.max(-hWIDTH, (int)(Math.min(Math.min(p1.get2Dx(), p2.get2Dx()), p3.get2Dx()))));
@@ -93,11 +89,14 @@ public class Triangle
                         && (edge2 = edgeFunction(xcxacy, ycyacx)) >= 0) {
                         int index = WIDTH * (pY+hHEIGHT) + (pX+hWIDTH);
                         double z = (1 / (edge1 + edge2 + edge3));
-                        int r = (int) (z * (edge1 * p1.getR() + edge2 * p2.getR() + edge3 * p3.getR()));
-                        int g = (int) (z * (edge1 * p1.getG() + edge2 * p2.getG() + edge3 * p3.getG()));
-                        int b = (int) (z * (edge1 * p1.getB() + edge2 * p2.getB() + edge3 * p3.getB()));
-                        int color = (255 << 24) | (r << 16) | (g << 8) | b;
-                        img[index] = color;
+                        if (z < zBuffer[index]) {
+                            zBuffer[index] = z;
+                            int r = (int) (z * (edge1 * p1.getR() + edge2 * p2.getR() + edge3 * p3.getR()));
+                            int g = (int) (z * (edge1 * p1.getG() + edge2 * p2.getG() + edge3 * p3.getG()));
+                            int b = (int) (z * (edge1 * p1.getB() + edge2 * p2.getB() + edge3 * p3.getB()));
+                            int color = (255 << 24) | (r << 16) | (g << 8) | b;
+                            img[index] = color;
+                        }
                         drawn = true;
                     } else if (drawn) {
                         break;
@@ -118,9 +117,5 @@ public class Triangle
 
     public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
         lightingScale = 110 + (int)((lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant);
-    }
-
-    public int getDistance() {
-        return distance;
     }
 }

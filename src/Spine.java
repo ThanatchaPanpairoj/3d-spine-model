@@ -100,10 +100,9 @@ public class Spine
         return s.charAt(0) == ' ' ? getNum(s.substring(1)) : Float.parseFloat(s);
     }
 
-    public void draw(int[] pixels) {
-        faces.sort(new DistanceComparator());
+    public void draw(int[] pixels, double[] zBuffer) {
         for(int i = 0; i < 30852; i++)
-            faces.get(i).draw(pixels);
+            faces.get(i).draw(pixels, zBuffer);
     }
 
     public void transform(float[] transformationMatrix) {
