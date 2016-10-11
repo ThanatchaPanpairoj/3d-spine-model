@@ -57,19 +57,20 @@ public class Triangle
         int maxY = (int)(Math.min(hHEIGHT, (int)(Math.max(Math.max(p1.get2Dy(), p2.get2Dy()), p3.get2Dy()))));
         int minY = (int)(Math.max(-hHEIGHT, (int)(Math.min(Math.min(p1.get2Dy(), p2.get2Dy()), p3.get2Dy()))));
 
-        // Delta Precalculations
-        double bay = (p2.get2Dy() - p1.get2Dy());
-        double cby = (p3.get2Dy() - p2.get2Dy());
-        double acy = (p1.get2Dy() - p3.get2Dy());
-        double bax = (p2.get2Dx() - p1.get2Dx());
-        double cbx = (p3.get2Dx() - p2.get2Dx());
-        double acx = (p1.get2Dx() - p3.get2Dx());
+        // Interpolation Precalculations 
+        double area = (p3.get2Dx() - p1.get2Dx()) * (p2.get2Dy() - p1.get2Dy())
+            - (p3.get2Dy() - p1.get2Dy()) * (p2.get2Dx() - p1.get2Dx());
+        double invZ1 = 1 / (area * p1.getZ());
+        double invZ2 = 1 / (area * p2.getZ());
+        double invZ3 = 1 / (area * p3.getZ());
 
-        // Interpolation Precalculations
-        double invArea = 1 / (acy * bax - acx * bay);
-        double invZ1 = 1 / p1.getZ();
-        double invZ2 = 1 / p2.getZ();
-        double invZ3 = 1 / p3.getZ();
+        // Delta Precalculations
+        double bay = (p2.get2Dy() - p1.get2Dy()) * invZ3;
+        double cby = (p3.get2Dy() - p2.get2Dy()) * invZ1;
+        double acy = (p1.get2Dy() - p3.get2Dy()) * invZ2;
+        double bax = (p2.get2Dx() - p1.get2Dx()) * invZ3;
+        double cbx = (p3.get2Dx() - p2.get2Dx()) * invZ1;
+        double acx = (p1.get2Dx() - p3.get2Dx()) * invZ2;
 
         // Column Precalculations
         double xaxbay = (minX - p1.get2Dx()) * bay;
@@ -91,9 +92,6 @@ public class Triangle
                         && (edge1 = edgeFunction(xbxcby, ybycbx)) >= 0
                         && (edge2 = edgeFunction(xcxacy, ycyacx)) >= 0) {
                         int index = WIDTH * (pY+hHEIGHT) + (pX+hWIDTH);
-                        edge1 = edge1 * invArea * invZ1;
-                        edge2 = edge2 * invArea * invZ2;
-                        edge3 = edge3 * invArea * invZ3;
                         double z = (1 / (edge1 + edge2 + edge3));
                         int r = (int) (z * (edge1 * p1.getR() + edge2 * p2.getR() + edge3 * p3.getR()));
                         int g = (int) (z * (edge1 * p1.getG() + edge2 * p2.getG() + edge3 * p3.getG()));
