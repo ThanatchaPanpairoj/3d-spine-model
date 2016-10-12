@@ -116,7 +116,7 @@ public class Spine
         }
 
         for(Triangle t : faces)
-            t.transform(transformationMatrix);
+            t.transformNormal(transformationMatrix);
     }
 
     public void transformDisc1(float[] transformationMatrix) {
@@ -138,7 +138,7 @@ public class Spine
         }
 
         for(Triangle t : disc1Faces)
-                t.transform(transformationMatrix);
+                t.transformNormal(transformationMatrix);
     }
 
     public void resetPosition() {

@@ -4,15 +4,13 @@ import java.awt.Color;
 import java.awt.Toolkit;
 
 /**
- * Write a description of class Face here.
+ * A triangle defined by 3 vertices and drawn using half-space functions.
  * 
- * @author (your name) 
+ * @author Thanatcha Panpairoj
  * @version (a version number or a date)
  */
 public class Triangle
 {
-    private int lightingScale;
-    private float lightingScaleConstant;
     private Vertex p1, p2, p3;
     private Point normal;
     private static final int WIDTH = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
@@ -34,7 +32,6 @@ public class Triangle
         float b2 = p3.getY() - p2.getY();
         float b3 = p3.getZ() - p2.getZ();
         normal = new Point(a2*b3-a3*b2,a3*b1-a1*b3,a1*b2-a2*b1);
-        lightingScaleConstant = 94 / (float)(Math.sqrt(Math.pow(normal.getX(), 2) + Math.pow(normal.getY(), 2) + Math.pow(normal.getZ(), 2))); 
         p1.addNormal(normal);
         p2.addNormal(normal);
         p3.addNormal(normal);
@@ -111,11 +108,7 @@ public class Triangle
         return xpxppy - ypyppx;
     }
 
-    public void transform(float[] transformationMatrix) {
+    public void transformNormal(float[] transformationMatrix) {
         normal.transform(transformationMatrix);
-    }
-
-    public void calculateNewlightingScale(float lightX, float lightY, float lightZ) {
-        lightingScale = 110 + (int)((lightX * normal.getX() + lightY * normal.getY() + lightZ * normal.getZ()) * lightingScaleConstant);
     }
 }
