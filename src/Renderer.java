@@ -61,9 +61,7 @@ public class Renderer extends JFrame
 
         Robot robot = new Robot();
         robot.mouseMove(width / 2 + 3, height / 2 + 25);
-        int midX = (int)MouseInfo.getPointerInfo().getLocation().getX();
-        int midY = (int)MouseInfo.getPointerInfo().getLocation().getY();
- 
+
         //System.out.println("" + width + ", " + height);
 
         //         frame.setUndecorated(true);
@@ -77,6 +75,9 @@ public class Renderer extends JFrame
         animationStartTime = startTime;
         frame = 0;
 
+        int midX = (int)MouseInfo.getPointerInfo().getLocation().getX();
+        int midY = (int)MouseInfo.getPointerInfo().getLocation().getY();
+ 
         class TimeListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 if(comp.hasFocus()) {
