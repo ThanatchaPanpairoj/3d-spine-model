@@ -9,7 +9,6 @@ import java.awt.Toolkit;
 public class Point
 {
     private float x, y, z, depthScale;
-    private int twoDX, twoDY;
     private static final float WIDTH = (float)Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.5f;
 
     public Point(float x, float y, float z) {
@@ -17,8 +16,6 @@ public class Point
         this.y = y;
         this.z = z;
         depthScale = WIDTH / z;
-        twoDX = (int)(depthScale * x);
-        twoDY = (int)(depthScale * y);
     }
 
     public void transform(float[] transformationMatrix) {
@@ -29,16 +26,6 @@ public class Point
         y = newY;
         z = newZ;
         depthScale = WIDTH / z;
-        twoDX = (int)(depthScale * x);
-        twoDY = (int)(depthScale * y);
-    }
-
-    public int get2Dx() {
-        return twoDX;
-    }
-
-    public int get2Dy() {
-        return twoDY;
     }
 
     public float getX() {
