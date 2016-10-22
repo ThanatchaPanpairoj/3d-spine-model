@@ -38,7 +38,7 @@ public class RendererComponent extends JComponent
         //        xRotations = new ArrayList<float[]>(632);
         yRotations = new ArrayList<float[]>(632);
         //        zRotations = new ArrayList<float[]>(632);
-        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)canvas.getRaster().getDataBuffer()).getData();
         zBuffer = new double[pixels.length];
         String line = null;
@@ -139,8 +139,7 @@ public class RendererComponent extends JComponent
     }
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Arrays.fill(pixels, (new Color(0, 0, 0, 0)).getRGB());
+        Arrays.fill(pixels, (new Color(0, 0, 0)).getRGB());
         Arrays.fill(zBuffer, 100000000);
         Graphics2D g2 = (Graphics2D)g;
         g2.translate(hWidth, hHeight);
@@ -152,12 +151,13 @@ public class RendererComponent extends JComponent
                 0, 0, 1, 110, 
                 0, 0, 0,     1});
 
+        spine.draw(pixels, zBuffer);
+        g.drawImage(canvas, -hWidth, -hHeight, this);
+
         g2.setColor(Color.WHITE);
         g2.drawString("ESC to exit", -hWidth + 5, - hHeight + 17);
         g2.drawString("FPS: " + fps, hWidth - 50, - hHeight + 17);
 
-        spine.draw(pixels, zBuffer);
-        g.drawImage(canvas, -hWidth, -hHeight, this);
         transform(new float[] {1, 0, 0,     0, 
                 0, 1, 0,     0, 
                 0, 0, 1, -110, 

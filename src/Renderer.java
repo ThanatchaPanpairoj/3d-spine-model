@@ -69,7 +69,7 @@ public class Renderer extends JFrame
 
         JPanel panel = new JPanel();
         panel.setDoubleBuffered(true);
-        panel.setBackground(Color.BLACK);
+        //panel.setBackground(Color.BLACK);
         RendererComponent comp = new RendererComponent(width, height);
         startTime = System.currentTimeMillis();
         animationStartTime = startTime;
@@ -103,8 +103,6 @@ public class Renderer extends JFrame
                                 -sinNXR, 0, cosNXR, 0, 
                                 0, 0,                    0, 1});
                         comp.animateStep1();
-                        comp.animateStep2();
-                        animationStartTime += 16.66666;
                         while(System.currentTimeMillis() - animationStartTime >= 16.66666) {
                             comp.animateStep2();
                             animationStartTime += 16.66666;
