@@ -38,7 +38,7 @@ public class Triangle
     }
 
     public void draw(int[] img, double[] zBuffer) {
-        if((p2.getX() * normal.getX() + p2.getY() * normal.getY() + p2.getZ() * (normal.getZ() - 110)) < 0) {
+        if((p2.getX() * normal.getX() + p2.getY() * normal.getY() + p2.getZ() * (normal.getZ() - 120)) < 0.01) {
             drawTriangle(img, zBuffer);
         }
     }
